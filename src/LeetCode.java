@@ -405,7 +405,7 @@ public class LeetCode {
             return this.queue.isEmpty();
         }
     } // [0ms, 100%] O(n)
-    public class MyStack2 {
+    public static class MyStack2 {
         private Queue<Integer> queue;
 
         /** Initialize your data structure here. */
