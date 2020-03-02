@@ -2,6 +2,7 @@ import java.util.*;
 
 public class LeetCode {
     // LeetCode 1
+    // [22ms, 42.72%] Bruteforce O(n^2)
     public static int[] twoSum(int[] nums, int target) {
         int length = nums.length;
         if (length < 2) {
@@ -15,7 +16,8 @@ public class LeetCode {
             }
         }
         return new int[]{};
-    } // [22ms, 42.72%] Bruteforce O(n^2)
+    }
+    // [3ms, 97.17%] Hashmap O(n)
     public static int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -26,9 +28,10 @@ public class LeetCode {
             map.put(nums[i], i);
         }
         return new int[]{};
-    } // [3ms, 97.17%] Hashmap O(n)
+    }
 
     // LeetCode 9
+    // [15ms, 13.45%] O(logn)
     public static boolean isPalindrome(int x) {
         if (x == 2147483647) {
             return false;
@@ -67,9 +70,10 @@ public class LeetCode {
             }
         }
         return true;
-    } // [15ms, 13.45%] O(logn)
+    }
 
     // LeetCode 13
+    // [12ms, 20.55%] SwitchCase O(7n)
     public static int romanToInt(String s) {
         int i = 0;
         int length = s.length();
@@ -144,9 +148,10 @@ public class LeetCode {
         }
         return num;
 
-    } // [12ms, 20.55%] SwitchCase O(7n)
+    }
 
     // LeetCode 14
+    // [1ms, 81.72%] Horizontal Traversal O(S)
     public static String longestCommonPrefix(String[] strs) {
         if (strs.length == 0) {
             return "";
@@ -174,9 +179,10 @@ public class LeetCode {
 
         return builder.toString();
 
-    } // [1ms, 81.72%] O(S)
+    }
 
     // LeetCode 20
+    // [43ms, 5.74%]
     public static boolean isValid(String s) {
         ArrayList<Character> letters = new ArrayList<>();
         int length = s.length();
@@ -190,9 +196,10 @@ public class LeetCode {
             s = s.replace("[]", "");
         }
         return s.length() == 0;
-    } // [43ms, 5.74%]
+    }
 
     // LeetCode 21
+    // Pointer [0ms, 100.00%]
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if ((l1 == null) && (l2 == null)) {
             return null;
@@ -234,7 +241,7 @@ public class LeetCode {
 
         return head.next;
 
-    } // [0ms, 100.00%]
+    }
     public static class ListNode {
         int val;
         ListNode next;
@@ -242,6 +249,7 @@ public class LeetCode {
     }
 
     // LeetCode 26
+    // [1ms, 99.90%] Two Pointers O(n)
     public static int removeDuplicates(int[] nums) {
         if (nums.length == 1) {
             return 1;
@@ -257,9 +265,10 @@ public class LeetCode {
             i++;
         }
         return j + 1;
-    } // [1ms, 99.90%] Two Pointers O(n)
+    }
 
     // LeetCode 27
+    // [0ms, 100.00%] Two Pointers O(n)
     public static int removeElement(int[] nums, int val) {
         int length = nums.length;
         int j = 0;
@@ -270,9 +279,10 @@ public class LeetCode {
             }
         }
         return j;
-    } // [0ms, 100.00%] Two Pointers O(n)
+    }
 
     // LeetCode 28
+    // [4ms, 34.04%] BruteForce O(n*m)
     public int strStr(String haystack, String needle) {
         if (needle.equals("")) {
             return 0;
@@ -296,10 +306,11 @@ public class LeetCode {
             }
         }
         return pos;
-    } // [4ms, 34.04%] BruteForce O(n*m)
+    }
 
 
     // LeetCode 53
+    // [1ms, 99.96%] Dynamic Programming O(n)
     public static int maxSubArray(int[] nums) {
         int res = nums[0];
         int sum = 0;
@@ -313,11 +324,13 @@ public class LeetCode {
             res = Math.max(res, sum);
         }
         return res;
-    } // [1ms, 99.96%] Dynamic Programming O(n)
+    }
+
+    // [2ms, 25.46%] Recursive O(n)
     public static int maxSubArray2(int[] nums) {
         DoubleInt result = LeetCode.findMax(nums, nums.length - 1);
         return result.intTwo;
-    } // [2ms, 25.46%] Recursive O(n)
+    }
     public static class DoubleInt {
         int intOne;
         int intTwo;
@@ -353,6 +366,7 @@ public class LeetCode {
 
 
     // LeetCode 121
+    // [1ms, 99.99%] Dynamic Programming O(n)
     public static int maxProfit(int[] prices) {
         int minPrices = Integer.MAX_VALUE;
         int maxProfit = 0;
@@ -364,9 +378,10 @@ public class LeetCode {
             }
         }
         return maxProfit;
-    } // [1ms, 99.99%] Dynamic Programming O(n)
+    }
 
     // LeetCode 225
+    // [0ms, 100%] Re-Push O(n)
     public class MyStack {
         private Queue<Integer> queue;
 
@@ -404,7 +419,8 @@ public class LeetCode {
         public boolean empty() {
             return this.queue.isEmpty();
         }
-    } // [0ms, 100%] O(n)
+    }
+    // [0ms, 100%] Recursive O(n)
     public static class MyStack2 {
         private Queue<Integer> queue;
 
@@ -444,7 +460,7 @@ public class LeetCode {
                 return false;
             }
         }
-    } // [0ms, 100%] Recursive O(n)
+    }
 
     public static void main(String[] args) {
 
