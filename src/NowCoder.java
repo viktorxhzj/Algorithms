@@ -1,234 +1,202 @@
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
-public class NowCoder {
-
-    /**
-     * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，
-     * 每一列都按照从上到下递增的顺序排序。请完成一个函数，
-     * 输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
-     * Traversal
-     * O(n+m)
-     * @param target
-     * @param array
-     * @return
-     */
-    public static boolean Find(int target, int [][] array) {
-        int rows = array.length - 1;
-        int cols = array[0].length - 1;
-        int i = rows;
-        int j = 0;
-        while ((i >= 0) && (j <= cols))
-        {
-            if (array[i][j] == target) {
-                return true;
-            }
-            else if (array[i][j] > target) {
-                i--;
-            }
-            else {
-                j++;
-            }
+/*
+在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+*/
+class Solution1 {
+    public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        if (matrix.length == 0) return false;
+        int rowLen = matrix.length, colLen = matrix[0].length;
+        int i = rowLen - 1, j = 0;
+        while ((i >= 0) && (j < colLen)) {
+            if (matrix[i][j] == target) return true;
+            else if (matrix[i][j] > target) i--;
+            else j++;
         }
         return false;
     }
 
-    /**
-     * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。
-     * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
-     * Traversal
-     * O(n)
-     * @param str
-     * @return
-     */
-    public static String replaceSpace(StringBuffer str) {
-        StringBuilder help = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == ' ') {
-                help.append("%20");
-            }
-            else {
-                help.append(str.charAt(i));
+
+    // DFS
+    public boolean exist(char[][] board, String word) {
+        char[] words = word.toCharArray();
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                if(dfs(board, words, i, j, 0)) return true;
             }
         }
-        return help.toString();
+        return false;
+    }
+    boolean dfs(char[][] board, char[] word, int i, int j, int k) {
+        if(i >= board.length || i < 0 || j >= board[0].length || j < 0 || board[i][j] != word[k]) return false;
+        if(k == word.length - 1) return true;
+        char tmp = board[i][j];
+        board[i][j] = '/';
+        boolean res = dfs(board, word, i + 1, j, k + 1) || dfs(board, word, i - 1, j, k + 1) ||
+                dfs(board, word, i, j + 1, k + 1) || dfs(board, word, i , j - 1, k + 1);
+        board[i][j] = tmp;
+        return res;
+    }
+}
+
+/*
+请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
+*/
+class Solution2 {
+    public String replaceSpace(String s) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != ' ') builder.append(s.charAt(i));
+            else builder.append("%20");
+        }
+        return builder.toString();
+    }
+}
+
+/*
+输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
+*/
+class Solution3 {
+    // 利用Stack的后进先出特性
+    public int[] reversePrint(ListNode head) {
+        Stack<Integer> myStack = new Stack<Integer>();
+        while (head != null) {
+            myStack.push(head.val);
+            head = head.next;
+        }
+        int[] array = new int[myStack.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = myStack.pop();
+        }
+        return array;
     }
 
-    /**
-     * 输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
-     * Recursive
-     * O(n)
-     * @param listNode
-     * @return
-     */
-    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-        if (listNode == null) {
-            return new ArrayList<Integer>();
+    // 递归
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    public int[] reversePrint2(ListNode head) {
+        this.helper(head);
+        int[] arr = new int[this.list.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = this.list.get(i);
         }
-        ArrayList<Integer> reverseList = new ArrayList<>();
-        NowCoder.helper(reverseList, listNode);
-        return reverseList;
-    }
-    public static void helper(ArrayList<Integer> list, ListNode listNode) {
-        if (listNode.next != null) {
-            helper(list, listNode.next);
-        }
-        list.add(listNode.val);
-    }
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
+        return arr;
     }
 
-    /**
-     * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
-     * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
-     * Recursive
-     * O(logn)
-     * @param pre
-     * @param in
-     * @return
-     */
-    public static TreeNode reConstructBinaryTree(int[] pre, int[] in) {
-        TreeNode root = new TreeNode(pre[0]);
-        if (pre.length == 1) {
-            return root;
-        }
-        int i = 0;
-        while (in[i] != pre[0]) {
-            i++;
-        }
-        if (i == in.length - 1) {
-            int[] leftPreArray = new int[i];
-            int[] leftInArray = new int[i];
-            System.arraycopy(pre, 1, leftPreArray, 0, i);
-            System.arraycopy(in, 0, leftInArray, 0, i);
-            root.left = reConstructBinaryTree(leftPreArray, leftInArray);
-            return root;
-        }
-        else if (i == 0) {
-            int[] rightPreArray = new int[pre.length - 1];
-            int[] rightInArray = new int[pre.length - 1];
-            System.arraycopy(pre, i + 1, rightPreArray, 0, pre.length - i - 1);
-            System.arraycopy(in, i + 1, rightInArray, 0, pre.length - i - 1);
-            root.right = reConstructBinaryTree(rightPreArray, rightInArray);
-            return root;
-        }
+    public void helper(ListNode cur) {
+        if (cur == null) return;
+        this.helper(cur.next);
+        this.list.add(cur.val);
+    }
+}
 
-
-        int[] leftPreArray = new int[i];
-        int[] leftInArray = new int[i];
-        int[] rightPreArray = new int[pre.length - i - 1];
-        int[] rightInArray = new int[pre.length - i - 1];
-
-        System.arraycopy(pre, 1, leftPreArray, 0, i);
-        System.arraycopy(in, 0, leftInArray, 0, i);
-        System.arraycopy(pre, i + 1, rightPreArray, 0, pre.length - i - 1);
-        System.arraycopy(in, i + 1, rightInArray, 0, pre.length - i - 1);
-        root.left = reConstructBinaryTree(leftPreArray, leftInArray);
-        root.right = reConstructBinaryTree(rightPreArray, rightInArray);
+/*
+输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+*/
+class Solution4 {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0) return null;
+        TreeNode root = this.formTree(preorder, inorder, 0, preorder.length - 1, 0, preorder.length - 1);
         return root;
     }
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
+    public TreeNode formTree(int[] preorder, int[] inorder, int pl, int ph, int il, int ih) {
+        TreeNode parent = new TreeNode(preorder[pl]);
+        if (pl == ph) return parent;
 
-        TreeNode(int x) {
-             val = x;
-        }
-    }
+        int parentNodePos = il;
+        while (inorder[parentNodePos] != preorder[pl]) parentNodePos++;
 
-    /**
-     * 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
-     * Traversal
-     * O(n)
-     */
-    public static class MyQueue {
-        Stack<Integer> stack1 = new Stack<Integer>();
-        Stack<Integer> stack2 = new Stack<Integer>();
-
-        public void push(int node) {
-            this.stack1.push(node);
-
+        if (parentNodePos == il) {
+            // no left child
+            pl++;
+            il++;
+            parent.right = this.formTree(preorder, inorder, pl, ph, il, ih);
         }
-
-        public int pop() {
-            while (!this.stack1.empty()) {
-                this.stack2.push(this.stack1.pop());
-            }
-            int temp = this.stack2.pop();
-            while (!this.stack2.empty()) {
-                this.stack1.push(this.stack2.pop());
-            }
-            return temp;
-        }
-    }
-
-    public static int minNumberInRotateArray(int[] array) {
-        if (array.length == 0) {
-            return 0;
-        }
-        if (array.length == 1) {
-            return array[0];
-        }
-        if (array.length == 2) {
-            if (array[0] >= array[1]) {
-                return array[1];
-            }
-            else {
-                return 0;
-            }
-        }
-        return helper(array, 0, array.length - 1);
-    }
-    public static int helper(int[] arr, int low, int high) {
-        if (low > high) {
-            return -1;
-        }
-        int mid = (low + high) / 2;
-        if (arr[mid] < arr[mid - 1]) {
-            return arr[mid];
-        }
-        if (arr[mid] >= arr[0]) {
-            return helper(arr, mid + 1, high);
+        else if (parentNodePos == ih) {
+            // no right child
+            pl++;
+            ih--;
+            parent.left = this.formTree(preorder, inorder, pl, ph, il, ih);
         }
         else {
-            return helper(arr, low, mid - 1);
+            parent.right = this.formTree(preorder, inorder, pl + parentNodePos - il + 1, ph, parentNodePos + 1, ih);
+            parent.left = this.formTree(preorder, inorder, pl + 1, pl + parentNodePos - il, il, parentNodePos - 1);
         }
+        return parent;
+    }
+}
+
+/*
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+ */
+class Solution5 {
+
+    private Stack<Integer> stack1 = new Stack<Integer>();;
+    private Stack<Integer> stack2 = new Stack<Integer>();;
+
+    public void appendTail(int value) {
+        stack1.push(value);
     }
 
-    /**
-     * 大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。
-     * @param n
-     * @return
-     */
-    public static int Fibonacci(int n) {
-        if (n == 0) {
-            return 0;
+    public int deleteHead() {
+        if (stack2.isEmpty() && stack1.isEmpty()) return -1;
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) stack2.push(stack1.pop());
         }
-        if (n == 1) {
-            return 1;
-        }
+        return stack2.pop();
+    }
+}
+
+class Solution6Unsolved {}
+
+/*
+大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。
+ */
+class Solution7 {
+    public int fib(int n) {
+        if (n == 0) return 0;
         int[] list = new int[n + 1];
         list[0] = 0;
         list[1] = 1;
-
         for (int i = 2; i < n + 1; i++) {
-            list[i] = list[i - 1] + list[i - 2];
+            list[i] = (list[i - 1] + list[i - 2]) % 1000000007;
         }
         return list[n];
     }
+}
 
+/*
+一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+ */
+class Solution8 {
+    public int numWays(int n) {
+        if (n == 0) return 1;
+        int[] list = new int[n + 1];
+        list[0] = 1;
+        list[1] = 1;
+        for (int i = 2; i < n + 1; i++) {
+            list[i] = (list[i - 1] + list[i - 2]) % 1000000007;
+        }
+        return list[n];
+    }
+}
 
-    public static int JumpFloor(int target) {
-        if (target == 1) {
-            return 1;
-        }
-        if (target == 2) {
-            return 2;
-        }
+/*
+一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+ */
+class Solution9 {
+    public int JumpFloorII(int target) {
+        if (target <= 0) return 0;
+        return (int) Math.pow(2, target - 1);
+    }
+}
+/*
+我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+ */
+class Solution10 {
+    public int RectCover(int target) {
+        if (target == 0) return 0;
+        if (target == 1) return 1;
         int[] list = new int[target];
         list[0] = 1;
         list[1] = 2;
@@ -237,10 +205,153 @@ public class NowCoder {
         }
         return list[target - 1];
     }
+}
+
+/*
+输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+ */
+class Solution11 {
+    public int NumberOf1(int n) {
+        if (n >= 0) {
+            int count = 0;
+            while (n != 0) {
+                if (n % 2 == 1) count++;
+                n = n / 2;
+            }
+            return count;
+        }
+        int[] binary = new int[32];
+        int i = 0;
+        while (n != 0) {
+            if (n % 2 == -1) binary[i] = 1;
+            else binary[i] = 0;
+            n = n / 2;
+            i++;
+        }
+        i = 0;
+        int count = 0;
+        while ((i < 32) && (binary[i] == 0)) i++;
+        i++;
+        while (i < 32) {
+            if (binary[i] == 1) binary[i] = 0;
+            else binary[i] = 1;
+            i++;
+        }
+        for (int num: binary) {
+            if (num == 1) count++;
+        }
+        return count;
+    }
 
     public static void main(String[] args) {
-        int[] pre = new int[]{3, 4, 5, 1, 2};
-        int[] in = new int[]{4, 3, 2, 1};
-        int res = NowCoder.minNumberInRotateArray(pre);
+        Solution11 test = new Solution11();
+        System.out.println(test.NumberOf1(-1));
+
     }
 }
+
+/*
+给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+保证base和exponent不同时为0
+ */
+class Solution12 {
+    public double Power(double base, int exponent) {
+        if (base == 0.0) return 0.0;
+        if (exponent == 0) return 1;
+        double res = base;
+        int abs = exponent > 0 ? exponent : -exponent;
+        while (abs > 1) {
+            res *= base;
+            abs--;
+        }
+        return exponent > 0 ? res : 1 / res;
+
+    }
+}
+
+/*
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，
+使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+ */
+class Solution13 {
+    public void reOrderArray(int [] array) {
+        int[] helper = new int[array.length];
+        int i = 0;
+        for (int num: array) {
+            if (num % 2 == 1) {
+                helper[i] = num;
+                i++;
+            }
+        }
+        for (int num: array) {
+            if (num % 2 == 0) {
+                helper[i] = num;
+                i++;
+            }
+        }
+        for (int j = 0; j < array.length; j++) {
+            array[j] = helper[j];
+        }
+    }
+}
+
+/*
+输入一个链表，输出该链表中倒数第k个结点。
+ */
+class Solution14 {
+    private int num = 0;
+    public ListNode FindKthToTail(ListNode head,int k) {
+        if (head == null) return null;
+
+        ListNode useless = FindKthToTail(head.next, k);
+
+        if (useless != null) return useless;
+
+        num++;
+
+        if (num == k) return head;
+
+        return null;
+    }
+}
+
+/*
+输入一个链表，反转链表后，输出新链表的表头。
+ */
+class Solution15 {
+    public ListNode ReverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode temp = ReverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return temp;
+    }
+
+    public ListNode ReverseList2(ListNode head) {
+
+        if(head==null)
+            return null;
+        ListNode pre = null;
+        ListNode next = null;
+        while(head!=null){
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+}
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
