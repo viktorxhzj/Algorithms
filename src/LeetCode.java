@@ -498,3 +498,21 @@ class LeetCode225 {
         }
     }
 }
+
+class LeetCode543 {
+    int res = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        dfs(root);
+        return res;
+    }
+
+    public int dfs(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int leftDepth = dfs(root.left);
+        int rigthDepth = dfs(root.right);
+        res = Math.max(res, leftDepth + rigthDepth);
+        return Math.max(leftDepth, rigthDepth) + 1;
+    }
+}
