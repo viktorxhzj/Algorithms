@@ -56,7 +56,7 @@ class LeetCode1 {
         return new int[]{};
     }
     // [3ms, 97.17%] Hashmap O(n)
-    public static int[] twoSum2(int[] nums, int target) {
+    public static int[] twoSum(int target, int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
