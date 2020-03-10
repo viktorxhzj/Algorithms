@@ -1,7 +1,45 @@
 import java.util.*;
 
-public class LeetCode {
-    // LeetCode 1
+class FindRepeatNumber {
+    /*
+    在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。
+    数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
+    请找出数组中任意一个重复的数字。
+     */
+
+    // 额外哈希表 O(n)
+    public int findRepeatNumber(int[] nums) {
+        HashMap<Integer, Integer> myMap = new HashMap<>();
+        int value = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (myMap.containsKey(nums[i])) {
+                value = nums[i];
+                break;
+            }
+            else {
+                myMap.put(nums[i], i);
+            }
+        }
+        return value;
+    }
+    // 本身就是哈希表 O(n)
+    public int findRepeatNumber2(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            while (nums[i] != i) {
+                if (nums[i] == nums[nums[i]]) {
+                    return nums[i];
+                }
+                int temp = nums[i];
+                nums[i] = nums[nums[i]];
+                nums[temp] = temp;
+            }
+        }
+        return -1;
+
+    }
+}
+
+class LeetCode1 {
     // [22ms, 42.72%] Bruteforce O(n^2)
     public static int[] twoSum(int[] nums, int target) {
         int length = nums.length;
@@ -29,8 +67,9 @@ public class LeetCode {
         }
         return new int[]{};
     }
+}
 
-    // LeetCode 9
+class LeetCode9 {
     // [15ms, 13.45%] O(logn)
     public static boolean isPalindrome(int x) {
         if (x == 2147483647) {
@@ -71,8 +110,9 @@ public class LeetCode {
         }
         return true;
     }
+}
 
-    // LeetCode 13
+class LeetCode13 {
     // [12ms, 20.55%] SwitchCase O(7n)
     public static int romanToInt(String s) {
         int i = 0;
@@ -149,8 +189,9 @@ public class LeetCode {
         return num;
 
     }
+}
 
-    // LeetCode 14
+class LeetCode14 {
     // [1ms, 81.72%] Horizontal Traversal O(S)
     public static String longestCommonPrefix(String[] strs) {
         if (strs.length == 0) {
@@ -180,16 +221,11 @@ public class LeetCode {
         return builder.toString();
 
     }
+}
 
-    // LeetCode 20
+class LeetCode20 {
     // [43ms, 5.74%]
     public static boolean isValid(String s) {
-        ArrayList<Character> letters = new ArrayList<>();
-        int length = s.length();
-        for (int i = 0; i < length; i++) {
-            letters.add(s.charAt(i));
-        }
-
         while ((s.contains("()")) || (s.contains("{}")) || (s.contains("[]"))) {
             s = s.replace("()", "");
             s = s.replace("{}", "");
@@ -197,8 +233,9 @@ public class LeetCode {
         }
         return s.length() == 0;
     }
+}
 
-    // LeetCode 21
+class LeetCode21 {
     // Pointer [0ms, 100.00%]
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if ((l1 == null) && (l2 == null)) {
@@ -242,13 +279,9 @@ public class LeetCode {
         return head.next;
 
     }
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
-    }
+}
 
-    // LeetCode 26
+class LeetCode26 {
     // [1ms, 99.90%] Two Pointers O(n)
     public static int removeDuplicates(int[] nums) {
         if (nums.length == 1) {
@@ -266,8 +299,9 @@ public class LeetCode {
         }
         return j + 1;
     }
+}
 
-    // LeetCode 27
+class LeetCode27 {
     // [0ms, 100.00%] Two Pointers O(n)
     public static int removeElement(int[] nums, int val) {
         int length = nums.length;
@@ -280,10 +314,11 @@ public class LeetCode {
         }
         return j;
     }
+}
 
-    // LeetCode 28
+class LeetCode28 {
     // [4ms, 34.04%] BruteForce O(n*m)
-    public int strStr(String haystack, String needle) {
+    public static int strStr(String haystack, String needle) {
         if (needle.equals("")) {
             return 0;
         }
@@ -307,9 +342,9 @@ public class LeetCode {
         }
         return pos;
     }
+}
 
-
-    // LeetCode 53
+class LeetCode53 {
     // [1ms, 99.96%] Dynamic Programming O(n)
     public static int maxSubArray(int[] nums) {
         int res = nums[0];
@@ -328,7 +363,7 @@ public class LeetCode {
 
     // [2ms, 25.46%] Recursive O(n)
     public static int maxSubArray2(int[] nums) {
-        DoubleInt result = LeetCode.findMax(nums, nums.length - 1);
+        DoubleInt result = LeetCode53.findMax(nums, nums.length - 1);
         return result.intTwo;
     }
     public static class DoubleInt {
@@ -344,7 +379,7 @@ public class LeetCode {
         if (high == 0) {
             return new DoubleInt(nums[high], nums[high]);
         }
-        DoubleInt childResult = LeetCode.findMax(nums, high - 1);
+        DoubleInt childResult = LeetCode53.findMax(nums, high - 1);
         if (childResult.intOne < 0) {
             if (childResult.intTwo > nums[high]) {
                 return new DoubleInt(nums[high], childResult.intTwo);
@@ -363,9 +398,9 @@ public class LeetCode {
             }
         }
     }
+}
 
-
-    // LeetCode 121
+class LeetCode121 {
     // [1ms, 99.99%] Dynamic Programming O(n)
     public static int maxProfit(int[] prices) {
         int minPrices = Integer.MAX_VALUE;
@@ -379,8 +414,9 @@ public class LeetCode {
         }
         return maxProfit;
     }
+}
 
-    // LeetCode 225
+class LeetCode225 {
     // [0ms, 100%] Re-Push O(n)
     public class MyStack {
         private Queue<Integer> queue;
@@ -460,48 +496,5 @@ public class LeetCode {
                 return false;
             }
         }
-    }
-
-    public static void main(String[] args) {
-
-    }
-}
-
-class FindRepeatNumber {
-    /*
-    在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。
-    数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
-    请找出数组中任意一个重复的数字。
-     */
-
-    // 额外哈希表 O(n)
-    public int findRepeatNumber(int[] nums) {
-        HashMap<Integer, Integer> myMap = new HashMap<>();
-        int value = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (myMap.containsKey(nums[i])) {
-                value = nums[i];
-                break;
-            }
-            else {
-                myMap.put(nums[i], i);
-            }
-        }
-        return value;
-    }
-    // 本身就是哈希表 O(n)
-    public int findRepeatNumber2(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-            while (nums[i] != i) {
-                if (nums[i] == nums[nums[i]]) {
-                    return nums[i];
-                }
-                int temp = nums[i];
-                nums[i] = nums[nums[i]];
-                nums[temp] = temp;
-            }
-        }
-        return -1;
-
     }
 }

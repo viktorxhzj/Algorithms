@@ -60,6 +60,19 @@ public class Algorithms {
         array[low] = pivot;
         return low;
     }
+
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[low]; //选第一个元素作为枢纽元
+        while(low < high)
+        {
+            while(low < high && array[high] >= pivot) high--;
+            array[low] = array[high]; //从后面开始找到第一个小于pivot的元素，放到low位置
+            while(low < high && array[low] <= pivot) low++;
+            array[high] = array[low]; //从前面开始找到第一个大于pivot的元素，放到high位置
+        }
+        array[low] = pivot; //最后枢纽元放到low的位置
+        return low;
+    }
     public static void quickSort(int[] array, int low, int high) {
         if (low < high) {
             int q = randomizedPartition(array, low, high);
