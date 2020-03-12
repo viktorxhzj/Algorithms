@@ -147,7 +147,18 @@ class Solution5 {
     }
 }
 
-class Solution6Unsolved {}
+class Solution6Unsolved {
+    public int minArray(int[] numbers) {
+        int i = 0, j = numbers.length - 1;
+        while (i < j) {
+            int m = (i + j) / 2;
+            if (numbers[m] > numbers[j]) i = m + 1;
+            else if (numbers[m] < numbers[j]) j = m;
+            else j--;
+        }
+        return numbers[i];
+    }
+}
 
 /*
 大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。

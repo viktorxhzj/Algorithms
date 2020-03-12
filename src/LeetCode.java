@@ -516,3 +516,25 @@ class LeetCode543 {
         return Math.max(leftDepth, rigthDepth) + 1;
     }
 }
+
+class LeetCode1013 {
+    public boolean canThreePartsEqualSum(int[] A) {
+        int sum = 0;
+        for (int element: A) sum += element;
+        if (sum % 3 != 0) return false;
+        int i = 0;
+        int j = A.length - 1;
+        int sumPartOne = A[i];
+        int sumPartTwo = A[j];
+        int target = sum / 3;
+        while (i < A.length - 1 && sumPartOne != target) {
+            i++;
+            sumPartOne += A[i];
+        }
+        while (j > 0 && sumPartTwo != target) {
+            j--;
+            sumPartTwo += A[j];
+        }
+        return i + 1 < j && sumPartOne == target && sumPartTwo == target;
+    }
+}
