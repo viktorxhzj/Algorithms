@@ -112,6 +112,25 @@ class LeetCode9 {
     }
 }
 
+class LeetCode11 {
+    public int maxArea(int[] height) {
+        int max = 0, i = 0, j = height.length - 1;
+        while (i != j) {
+            if (height[i] > height[j]) {
+                max = Math.max(max, height[j] * (j - i));
+                j--;
+            }
+            else {
+                max = Math.max(max, height[i] * (j - i));
+                i++;
+            }
+        }
+        return max;
+
+
+    }
+}
+
 class LeetCode13 {
     // [12ms, 20.55%] SwitchCase O(7n)
     public static int romanToInt(String s) {
@@ -517,6 +536,24 @@ class LeetCode543 {
     }
 }
 
+class LeetCode917 {
+    public String reverseOnlyLetters(String S) {
+        StringBuilder builder = new StringBuilder();
+        int i = 0, j = S.length() - 1;
+        while (i < S.length()) {
+            while (j >=0 && !Character.isLetter(S.charAt(j))) j--;
+            if (Character.isLetter(S.charAt(i))) {
+                builder.append(S.charAt(j));
+                j--;
+            }
+            else builder.append(S.charAt(i));
+            i++;
+        }
+        return builder.toString();
+
+    }
+}
+
 class LeetCode1013 {
     public boolean canThreePartsEqualSum(int[] A) {
         int sum = 0;
@@ -536,5 +573,25 @@ class LeetCode1013 {
             sumPartTwo += A[j];
         }
         return i + 1 < j && sumPartOne == target && sumPartTwo == target;
+    }
+}
+
+class LeetCode1071 {
+    public String gcdOfStrings(String str1, String str2) {
+        int a = str1.length(), b = str2.length();
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+
+        for (int i = 0; i < str1.length(); i = i + a) {
+            if (!str1.substring(i, i + a).equals(str1.substring(0, a))) return "";
+        }
+        for (int i = 0; i < str2.length(); i = i + a) {
+            if (!str2.substring(i, i + a).equals(str1.substring(0, a))) return "";
+        }
+        return str1.substring(0, a);
+
     }
 }
