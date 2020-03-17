@@ -147,7 +147,7 @@ class Solution5 {
     }
 }
 
-class Solution6Unsolved {
+class Solution6 {
     public int minArray(int[] numbers) {
         int i = 0, j = numbers.length - 1;
         while (i < j) {
@@ -354,3 +354,81 @@ class Solution15 {
     }
 }
 
+class Solution16 {
+    public ListNode Merge(ListNode list1,ListNode list2) {
+        if(list1 == null)
+            return list2;
+        if(list2 == null)
+            return list1;
+        ListNode res = null;
+        if (list1.val < list2.val) {
+            res = list1;
+            res.next = Merge(list1.next, list2);
+        }
+        else {
+            res = list2;
+            res.next = Merge(list1, list2.next);
+        }
+        return res;
+    }
+
+    public ListNode Merge2(ListNode list1,ListNode list2) {
+        ListNode cur = new ListNode(-1);
+        ListNode head = cur;
+        while (list1 != null && list2 != null) {
+            if (list1.val >= list2.val) {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            else {
+                cur.next = list1;
+                list1 = list1.next;
+            }
+            cur = cur.next;
+        }
+        if (list1 != null) cur.next = list1;
+        if (list2 != null) cur.next = list2;
+        return head.next;
+    }
+
+    public static void main(String[] args) {
+        ListNode s1 = new ListNode(1);
+        s1.next = new ListNode(3);
+        s1.next.next = new ListNode(5);
+        ListNode s2 = new ListNode(2);
+        s2.next = new ListNode(4);
+        s2.next.next = new ListNode(6);
+        Solution16 solution = new Solution16();
+        solution.Merge2(s1, s2);
+
+
+
+    }
+}
+
+class Solution17 {
+    public boolean HasSubtree(TreeNode root1,TreeNode root2) {
+        if(root1 == null || root2 == null)  return false;
+        return doesTree1HasTree2(root1, root2)|| HasSubtree(root1.left, root2)
+                ||HasSubtree(root1.right, root2);
+    }
+
+    private boolean doesTree1HasTree2(TreeNode root1,TreeNode root2) {
+        if(root2 == null)  return true;
+        if(root1 == null)  return false;
+        return root1.val==root2.val && doesTree1HasTree2(root1.left, root2.left)
+                && doesTree1HasTree2(root1.right, root2.right);
+    }
+}
+
+class Solution18 {
+    public void Mirror(TreeNode root) {
+        if (root != null && (root.left != null || root.right != null)) {
+            TreeNode temp = root.left;
+            root.left = root.right;
+            root.right = temp;
+            Mirror(root.left);
+            Mirror(root.right);
+        }
+    }
+}
