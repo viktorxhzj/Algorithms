@@ -432,3 +432,82 @@ class Solution18 {
         }
     }
 }
+
+class Solution19 {
+    public ArrayList<Integer> printMatrix(int[][] matrix) {
+        int row = matrix.length, col = matrix[0].length;
+        int[][] flag = new int[row][col];
+        int i = 0;
+        int j = 0;
+        int x1 = 0;
+        int x2 = col - 1;
+        int y1 = 0;
+        int y2 = row - 1;
+        ArrayList<Integer> list = new ArrayList<>();
+        while (x2 >= x1 && y2 >= y1) {
+            list.add(matrix[i][j]);
+            flag[i][j] = 1;
+            while (j + 1 <= x2) {
+                j++;
+                if (flag[i][j] != 1) {
+                    list.add(matrix[i][j]);
+                    flag[i][j] = 1;
+                }
+            }
+            while (i + 1 <= y2) {
+                i++;
+                if (flag[i][j] != 1) {
+                    list.add(matrix[i][j]);
+                    flag[i][j] = 1;
+                }
+            }
+            while (j - 1 >= y1) {
+                j--;
+                if (flag[i][j] != 1) {
+                    list.add(matrix[i][j]);
+                    flag[i][j] = 1;
+                }
+            }
+            while (i - 1 > x1) {
+                i--;
+                if (flag[i][j] != 1) {
+                    list.add(matrix[i][j]);
+                    flag[i][j] = 1;
+                }
+            }
+            x1++;
+            x2--;
+            y1++;
+            y2--;
+            i = x1;
+            j = y1;
+
+        }
+        return list;
+    }
+
+
+}
+
+class Solution20 {
+    Stack<Integer> stack1 = new Stack<>();
+    Stack<Integer> stack2 = new Stack<>();
+    public void push(int node) {
+        stack1.push(node);
+        if (stack2.isEmpty()) stack2.push(node);
+        else if (node <= stack2.peek())  stack2.push(node);
+    }
+
+    public void pop() {
+        int temp = stack1.pop();
+        if (temp == stack2.peek()) stack2.pop();
+    }
+
+    public int top() {
+        return stack1.peek();
+    }
+
+    public int min() {
+        return stack2.peek();
+    }
+}
