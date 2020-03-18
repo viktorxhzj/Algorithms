@@ -1,3 +1,5 @@
+import sun.reflect.generics.tree.Tree;
+
 import java.util.*;
 
 /*
@@ -406,6 +408,11 @@ class Solution16 {
     }
 }
 
+// 0317
+
+/*
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+ */
 class Solution17 {
     public boolean HasSubtree(TreeNode root1,TreeNode root2) {
         if(root1 == null || root2 == null)  return false;
@@ -421,6 +428,9 @@ class Solution17 {
     }
 }
 
+/*
+操作给定的二叉树，将其变换为源二叉树的镜像。
+ */
 class Solution18 {
     public void Mirror(TreeNode root) {
         if (root != null && (root.left != null || root.right != null)) {
@@ -433,6 +443,9 @@ class Solution18 {
     }
 }
 
+/*
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字
+ */
 class Solution19 {
     public ArrayList<Integer> printMatrix(int[][] matrix) {
         int row = matrix.length, col = matrix[0].length;
@@ -489,6 +502,9 @@ class Solution19 {
 
 }
 
+/*
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数。
+ */
 class Solution20 {
     Stack<Integer> stack1 = new Stack<>();
     Stack<Integer> stack2 = new Stack<>();
@@ -509,5 +525,77 @@ class Solution20 {
 
     public int min() {
         return stack2.peek();
+    }
+}
+
+//0318
+
+/*
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。
+假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，
+序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+ */
+class Solution21 {
+    public boolean IsPopOrder(int [] pushA,int [] popA) {
+        if(pushA.length == 0 || popA.length == 0)
+            return false;
+        Stack<Integer> s = new Stack<Integer>();
+        //用于标识弹出序列的位置
+        int popIndex = 0;
+        for(int i = 0; i< pushA.length;i++){
+            s.push(pushA[i]);
+            //如果栈不为空，且栈顶元素等于弹出序列
+            while(!s.empty() &&s.peek() == popA[popIndex]){
+                //出栈
+                s.pop();
+                //弹出序列向后一位
+                popIndex++;
+            }
+        }
+        return s.empty();
+    }
+}
+
+/*
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+ */
+class Solution22 {
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        if (root == null) return list;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            list.add(cur.val);
+            if (cur.left != null) queue.offer(cur.left);
+            if (cur.right != null) queue.offer(cur.right);
+        }
+        return list;
+    }
+}
+
+/*
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+ */
+class Solution23 {
+    public boolean VerifySquenceOfBST(int[] sequence) {
+        if (sequence == null || sequence.length == 0) return false;
+        return this.finder(sequence, 0, sequence.length - 1);
+    }
+
+    public boolean finder(int[] seq, int low, int high) {
+        if (low == high) return true;
+        int i = low;
+        int root = seq[high];
+        while (seq[i] < root) i++;
+        int j = i;
+        while (j < high) {
+            if (seq[j] < root) return false;
+            j++;
+        }
+        if (i == low || i == high) return this.finder(seq, low, high - 1);
+        else return this.finder(seq, low, i - 1) && this.finder(seq, i, high - 1);
+
     }
 }
