@@ -599,3 +599,95 @@ class Solution23 {
 
     }
 }
+
+//0319
+
+/*
+输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+(注意: 在返回值的list中，数组长度大的数组靠前)
+ */
+class Solution24 {
+    private ArrayList<ArrayList<Integer>> listAll = new ArrayList<>();
+    private ArrayList<Integer> list = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root == null) return listAll;
+        list.add(root.val);
+        target -= root.val;
+        if(target == 0 && root.left == null && root.right == null)
+            listAll.add(new ArrayList<Integer>(list));
+        FindPath(root.left, target);
+        FindPath(root.right, target);
+        list.remove(list.size()-1);
+        return listAll;
+    }
+}
+
+/*
+输入一个复杂链表（每个节点中有节点值，以及两个指针，
+一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。
+（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+ */
+class Solution25 {
+    public RandomListNode Clone(RandomListNode pHead) {
+        if (pHead == null) return null;
+        RandomListNode cur = pHead;
+        while (cur != null) {
+            RandomListNode temp = cur.next;
+            cur.next = new RandomListNode(cur.label);
+            cur.next.next = temp;
+            cur = temp;
+        }
+        cur = pHead;
+        while (cur != null) {
+            cur.next.random = cur.random == null ? null : cur.random.next;
+            cur = cur.next.next;
+        }
+        cur = pHead;
+        RandomListNode pCloneHead = pHead.next;
+        while(cur != null) {
+            RandomListNode next = cur.next;
+            if (next == null) cur = null;
+            else {
+                cur.next = next.next;
+                cur = next;
+            }
+        }
+        return pCloneHead;
+    }
+}
+
+/*
+输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。
+要求不能创建任何新的结点，只能调整树中结点指针的指向。
+ */
+class Solution26 {
+    ArrayList<TreeNode> list = new ArrayList<>();
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        if (pRootOfTree == null) return null;
+        this.inOrder(pRootOfTree);
+        if (list.size() == 1) return pRootOfTree;
+        for (int i = 0; i < list.size(); i++) {
+            if (i == 0) {
+                list.get(i).right = list.get(i + 1);
+            }
+            else if (i == list.size() - 1) {
+                list.get(i).left = list.get(i - 1);
+
+            }
+            else {
+                list.get(i).left = list.get(i - 1);
+                list.get(i).right = list.get(i + 1);
+            }
+        }
+        return list.get(0);
+    }
+
+    public void inOrder(TreeNode node) {
+        if (node != null) {
+            this.inOrder(node.left);
+            list.add(node);
+            this.inOrder(node.right);
+        }
+    }
+}
