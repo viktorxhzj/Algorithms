@@ -691,3 +691,207 @@ class Solution26 {
         }
     }
 }
+
+// 0320
+
+/*
+输入一个字符串,按字典序打印出该字符串中字符的所有排列。
+例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+ */
+class Solution27 {
+    ArrayList<String> list = new ArrayList<>();
+    public ArrayList<String> Permutation(String str) {
+        if (str.length() == 0) return this.list;
+        char[] chars = str.toCharArray();
+        this.helper(chars, 0);
+        Collections.sort(this.list);
+        return this.list;
+    }
+
+    public void helper(char[] chars, int i) {
+        if (i == chars.length - 1) {
+            if (!this.list.contains(String.valueOf(chars))) this.list.add(String.valueOf(chars));
+        }
+        else {
+            for (int j = i; j < chars.length; j++) {
+                swap(chars, i, j);
+                this.helper(chars, i + 1);
+                swap(chars, i, j);
+            }
+        }
+    }
+
+    public void swap(char[] chars, int i, int j) {
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+    }
+}
+
+/*
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+ */
+class Solution28 {
+    public int MoreThanHalfNum_Solution(int[] array) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int half = array.length / 2;
+        for (int value : array) {
+            if (!map.containsKey(value)) map.put(value, 1);
+            else map.put(value, map.get(value) + 1);
+            if (map.get(value) > half) return value;
+        }
+        return 0;
+    }
+}
+
+/*
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+ */
+class Solution29 {
+    private ArrayList<Integer> heapArray = new ArrayList<>();
+    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+        if (input.length == 0 || k > input.length) return new ArrayList<>();
+        for (int num: input) heapArray.add(num);
+        this.heapify();
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < k; i++) list.add(extractMin());
+        return list;
+    }
+    public ArrayList<Integer> GetLeastNumbers_Solution2(int[] input, int k) {
+        ArrayList<Integer> list = new ArrayList<>();
+        if (input.length == 0 || k > input.length) return list;
+        for (int i = 0; i < k; i++) {
+            int temp = this.partition(input, 0, input.length - 1);
+            while (temp != i) {
+                if (temp > i) {
+                    temp = this.partition(input, 0, temp - 1);
+                }
+                else {
+                    temp = this.partition(input, temp + 1, input.length - 1);
+                }
+            }
+            list.add(input[i]);
+        }
+        return list;
+
+    }
+    public int partition(int[] array, int low, int high) {
+        int pivot = array[low]; //选第一个元素作为枢纽元
+        while(low < high)
+        {
+            while(low < high && array[high] >= pivot) high--;
+            array[low] = array[high]; //从后面开始找到第一个小于pivot的元素，放到low位置
+            while(low < high && array[low] <= pivot) low++;
+            array[high] = array[low]; //从前面开始找到第一个大于pivot的元素，放到high位置
+        }
+        array[low] = pivot; //最后枢纽元放到low的位置
+        return low;
+    }
+
+    public void percolateUp(int index) {
+        if (index > 0) {
+            int position = index + 1;
+            int parentPosition = position / 2;
+            int parentIndex = parentPosition - 1;
+            while ((parentIndex >= 0) && (this.heapArray.get(parentIndex) > this.heapArray.get(index))) {
+                int temp = this.heapArray.get(parentIndex);
+                this.heapArray.set(parentIndex, this.heapArray.get(index));
+                this.heapArray.set(index, temp);
+                position = parentPosition;
+                parentPosition = position / 2;
+                index = position - 1;
+                parentIndex = parentPosition - 1;
+            }
+        }
+    } // O(logn)
+
+    public void percolateDown(int index) {
+        int size = this.heapArray.size();
+        int position = index + 1;
+        int leftChild = position * 2;
+        int leftIndex = leftChild - 1;
+        int rightChild = leftChild + 1;
+        int rightIndex = rightChild - 1;
+        while (leftChild <= size) {
+            if (leftChild == size) {
+                if (this.heapArray.get(index) > this.heapArray.get(leftIndex)) {
+                    int temp = this.heapArray.get(index);
+                    this.heapArray.set(index, this.heapArray.get(leftIndex));
+                    this.heapArray.set(leftIndex, temp);
+                }
+                break;
+            }
+            else {
+                if ((this.heapArray.get(index) > this.heapArray.get(leftIndex)) && (this.heapArray.get(leftIndex) > this.heapArray.get(rightIndex))) {
+                    int temp = this.heapArray.get(index);
+                    this.heapArray.set(index, this.heapArray.get(rightIndex));
+                    this.heapArray.set(rightIndex, temp);
+                    position = rightChild;
+                    index = position - 1;
+                    leftChild = position * 2;
+                    leftIndex = leftChild - 1;
+                    rightChild = leftChild + 1;
+                    rightIndex = rightChild - 1;
+                }
+                else if ((this.heapArray.get(index) > this.heapArray.get(rightIndex)) && (this.heapArray.get(rightIndex) > this.heapArray.get(leftIndex))) {
+                    int temp = this.heapArray.get(index);
+                    this.heapArray.set(index, this.heapArray.get(leftIndex));
+                    this.heapArray.set(leftIndex, temp);
+                    position = leftChild;
+                    index = position - 1;
+                    leftChild = position * 2;
+                    leftIndex = leftChild - 1;
+                    rightChild = leftChild + 1;
+                    rightIndex = rightChild - 1;
+                }
+                else if (this.heapArray.get(index) > this.heapArray.get(leftIndex)) {
+                    int temp = this.heapArray.get(index);
+                    this.heapArray.set(index, this.heapArray.get(leftIndex));
+                    this.heapArray.set(leftIndex, temp);
+                    position = leftChild;
+                    index = position - 1;
+                    leftChild = position * 2;
+                    leftIndex = leftChild - 1;
+                    rightChild = leftChild + 1;
+                    rightIndex = rightChild - 1;
+                }
+                else if (this.heapArray.get(index) > this.heapArray.get(rightIndex)) {
+                    int temp = this.heapArray.get(index);
+                    this.heapArray.set(index, this.heapArray.get(rightIndex));
+                    this.heapArray.set(rightIndex, temp);
+                    position = rightChild;
+                    index = position - 1;
+                    leftChild = position * 2;
+                    leftIndex = leftChild - 1;
+                    rightChild = leftChild + 1;
+                    rightIndex = rightChild - 1;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+    } // O(logn)
+
+    public void heapify() {
+        int size = this.heapArray.size();
+        for (int i = size - 1; i >= 0; i--) {
+            this.percolateDown(i);
+        }
+    } // Based on percolateDown -> O(n)
+
+    public int extractMin() {
+        int size = this.heapArray.size();
+        if (size == 1) {
+            return this.heapArray.remove(0);
+        }
+        else {
+            int min = this.heapArray.get(0);
+            int last = this.heapArray.remove(size - 1);
+            this.heapArray.set(0, last);
+            this.percolateDown(0);
+            return min;
+        }
+    }
+}
