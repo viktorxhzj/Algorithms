@@ -69,6 +69,30 @@ class LeetCode1 {
     }
 }
 
+class LeetCode5 {
+    public String longestPalindrome(String s) {
+        if (s.equals("")) return "";
+        int length = 0;
+        int start = 0;
+        int end = 0;
+        char[] letters = s.toCharArray();
+        int n = letters.length;
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (j <= (i + 1)) dp[i][j] = letters[i] == letters[j];
+                else dp[i][j] = (letters[i] == letters[j]) & dp[i + 1][j - 1];
+                if (dp[i][j] & (j - i + 1) > length) {
+                    length = j - i + 1;
+                    start = i;
+                    end = j;
+                }
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+}
+
 class LeetCode9 {
     // [15ms, 13.45%] O(logn)
     public static boolean isPalindrome(int x) {
