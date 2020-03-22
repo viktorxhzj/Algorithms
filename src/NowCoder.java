@@ -1,5 +1,6 @@
 import sun.reflect.generics.tree.Tree;
 
+import javax.naming.PartialResultException;
 import java.util.*;
 
 /*
@@ -1054,5 +1055,127 @@ class Solution33 {
             if (result[i] == result[p5]*5) p5++;//为了防止重复需要三个if都能够走到
         }
         return result[index-1];
+    }
+}
+
+// 0322
+
+/*
+在一个字符串(0<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符,
+并返回它的位置, 如果没有则返回 -1（需要区分大小写）.
+ */
+class Solution34 {
+    public int FirstNotRepeatingChar(String str) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        char[] array = str.toCharArray();
+        for (char c : array) {
+            if (!map.containsKey(c)) map.put(c, 1);
+            else map.put(c, map.get(c) + 1);
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (map.get(array[i]) == 1) return i;
+        }
+        return -1;
+    }
+}
+
+/*
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
+输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007
+ */
+
+class Solution35 {
+    int count = 0;
+    int[] helper;
+    public int InversePairs(int[] array) {
+        if (array == null) return this.count;
+        helper = new int[array.length];
+        this.mergeSort(array, 0, array.length - 1);
+        return this.count;
+    }
+    public void mergeSort(int[] array, int low, int high) {
+        if (low >= high) return ;
+        int mid = (low + high) / 2;
+        this.mergeSort(array, low, mid);
+        this.mergeSort(array, mid + 1, high);
+        this.merge(array, low, mid, high);
+    }
+    public void merge(int[] array, int low, int mid, int high) {
+        int k = 0;
+        int i = low;
+        int j = mid + 1;
+        while (i <= mid && j <= high) {
+            if (array[i] > array[j]) {
+                this.count = (this.count + mid - i + 1) % 1000000007;
+                helper[k++] = array[j++];
+            }
+            else {
+                helper[k++] = array[i++];
+            }
+        }
+        while (i <= mid) {
+            helper[k++] = array[i++];
+        }
+        while (j <= high) {
+            helper[k++] = array[j++];
+        }
+        for (k = low; k <= high; k++) {
+            array[k] = helper[k - low];
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution35 test = new Solution35();
+        System.out.println(test.InversePairs(new int[]{2, 3, 4, 5, 1, 6, 7, 8, 0}));
+    }
+}
+
+
+/*
+输入两个链表，找出它们的第一个公共结点。
+（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）
+ */
+class Solution36 {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if (pHead1 == null || pHead2 == null) return null;
+        Stack<ListNode> stack1 = new Stack<>();
+        Stack<ListNode> stack2 = new Stack<>();
+        while (pHead1 != null) {
+            stack1.push(pHead1);
+            pHead1 = pHead1.next;
+        }
+        while (pHead2 != null) {
+            stack2.push(pHead2);
+            pHead2 = pHead2.next;
+        }
+        ListNode commonListNode = null;
+        while (!stack1.isEmpty() && !stack2.isEmpty() && stack1.peek() == stack2.peek()) {
+            stack1.pop();
+            commonListNode = stack2.pop();
+        }
+        return commonListNode;
+    }
+}
+
+/*
+统计一个数字在排序数组中出现的次数。
+ */
+
+class Solution37 {
+    public int GetNumberOfK(int [] array , int k) {
+        if(array == null || array.length == 0)
+            return 0;
+        return biSearch(array, k + 0.5) - biSearch(array, k - 0.5);
+    }
+    private int biSearch(int [] array, double k){
+        int low = 0, high = array.length - 1;
+        while(low <= high){
+            int mid = low + (high -low) / 2;
+            if(array[mid] > k)
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+        return low;
     }
 }
