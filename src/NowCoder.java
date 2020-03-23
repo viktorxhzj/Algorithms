@@ -1180,3 +1180,113 @@ class Solution37 {
     }
 
 }
+
+
+//0323
+
+/*
+输入一棵二叉树，求该树的深度。
+从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+ */
+class Solution38 {
+    public int TreeDepth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(TreeDepth(root.left), TreeDepth(root.right)) + 1;
+    }
+}
+
+/*
+输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+ */
+class Solution39 {
+    public boolean IsBalanced_Solution(TreeNode root) {
+        return getDepth(root) != -1;
+    }
+
+    private int getDepth(TreeNode root) {
+        if (root == null) return 0;
+        int left = getDepth(root.left);
+        if (left == -1) return -1;
+        int right = getDepth(root.right);
+        if (right == -1) return -1;
+        return Math.abs(left - right) > 1 ? -1 : 1 + Math.max(left, right);
+    }
+}
+
+
+/*
+一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字
+ */
+//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+class Solution40 {
+    public void FindNumsAppearOnce(int[] array, int[] num1, int[] num2)    {
+        int length = array.length;
+        if(length == 2){
+            num1[0] = array[0];
+            num2[0] = array[1];
+            return;
+        }
+        int bitResult = 0;
+        for(int i = 0; i < length; ++i){
+            bitResult ^= array[i];
+        }
+        int index = findFirst1(bitResult);
+        for(int i = 0; i < length; ++i){
+            if(isBit1(array[i], index)){
+                num1[0] ^= array[i];
+            }else{
+                num2[0] ^= array[i];
+            }
+        }
+    }
+
+    private int findFirst1(int bitResult){
+        int index = 0;
+        while(((bitResult & 1) == 0) && index < 32){
+            bitResult >>= 1;
+            index++;
+        }
+        return index;
+    }
+
+    private boolean isBit1(int target, int index){
+        return ((target >> index) & 1) == 1;
+    }
+}
+
+/*
+小明很喜欢数学,有一天他在做数学作业时,要求计算出9~16的和,他马上就写出了正确答案是100。
+但是他并不满足于此,他在想究竟有多少种连续的正数序列的和为100(至少包括两个数)。
+没多久,他就得到另一组连续正数和为100的序列:18,19,20,21,22。
+现在把问题交给你,你能不能也很快的找出所有和为S的连续正数序列? Good Luck!
+ */
+class Solution41 {
+    public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
+        //存放结果
+        ArrayList<ArrayList<Integer> > result = new ArrayList<>();
+        //两个起点，相当于动态窗口的两边，根据其窗口内的值的和来确定窗口的位置和大小
+        int plow = 1,phigh = 2;
+        while(phigh > plow){
+            //由于是连续的，差为1的一个序列，那么求和公式是(a0+an)*n/2
+            int cur = (phigh + plow) * (phigh - plow + 1) / 2;
+            //相等，那么就将窗口范围的所有数添加进结果集
+            if(cur == sum){
+                ArrayList<Integer> list = new ArrayList<>();
+                for(int i=plow;i<=phigh;i++){
+                    list.add(i);
+                }
+                result.add(list);
+                plow++;
+                //如果当前窗口内的值之和小于sum，那么右边窗口右移一下
+            }else if(cur < sum){
+                phigh++;
+            }else{
+                //如果当前窗口内的值之和大于sum，那么左边窗口右移一下
+                plow++;
+            }
+        }
+        return result;
+    }
+
+}
