@@ -1290,3 +1290,114 @@ class Solution41 {
     }
 
 }
+
+// 0324
+
+/*
+输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+ */
+class Solution42 {
+    public ArrayList<Integer> FindNumbersWithSum(int[] array,int sum) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int mul = Integer.MAX_VALUE;
+        int[] res = new int[2];
+        if (array.length < 2) return list;
+        int i = 0;
+        int j = array.length - 1;
+        while (i < j) {
+            if (array[i] + array[j] < sum) i++;
+            if (array[i] + array[j] > sum) j--;
+            if (array[i] + array[j] == sum) {
+                if (array[i] * array[j] < mul) {
+                    mul = array[i] * array[j];
+                    res[0] = array[i];
+                    res[1] = array[j];
+                }
+                i++;
+            }
+        }
+        if (mul == Integer.MAX_VALUE) return list;
+        else {
+            list.add(res[0]);
+            list.add(res[1]);
+            return list;
+        }
+    }
+}
+
+/*
+汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，
+就是用字符串模拟这个指令的运算结果。对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。
+例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！
+ */
+class Solution43 {
+    public String LeftRotateString(String str, int n) {
+        char[] chars = str.toCharArray();
+        if (chars.length < n) return "";
+        reverse(chars, 0, n - 1);
+        reverse(chars, n, chars.length - 1);
+        reverse(chars, 0, chars.length - 1);
+        return String.valueOf(chars);
+    }
+
+    public void reverse(char[] chars, int low, int high) {
+        char temp;
+        while (low < high) {
+            temp = chars[low];
+            chars[low] = chars[high];
+            chars[high] = temp;
+            low++;
+            high--;
+        }
+    }
+}
+
+/*
+牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。
+同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。
+例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，
+正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
+ */
+class Solution44 {
+    public String ReverseSentence(String str) {
+        if (str.trim().equals("") && str.length() > 0) {
+            return str;
+        }
+        String[] words = str.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (int i = words.length - 1; i > 0; i--) builder.append(words[i]).append(" ");
+        builder.append(words[0]);
+        return builder.toString();
+
+    }
+}
+
+/*
+LL今天心情特别好,因为他去买了一副扑克牌,发现里面居然有2个大王,2个小王(一副牌原本是54张^_^)...
+他随机从中抽出了5张牌,想测测自己的手气,看看能不能抽到顺子,如果抽到的话,他决定去买体育彩票,嘿嘿！！
+“红心A,黑桃3,小王,大王,方片5”,“Oh My God!”不是顺子.....LL不高兴了,他想了想,决定大\小 王可以看成任何数字,
+并且A看作1,J为11,Q为12,K为13。上面的5张牌就可以变成“1,2,3,4,5”(大小王分别看作2和4),“So Lucky!”。
+LL决定去买体育彩票啦。 现在,要求你使用这幅牌模拟上面的过程,然后告诉我们LL的运气如何，
+如果牌能组成顺子就输出true，否则就输出false。为了方便起见,你可以认为大小王是0。
+ */
+class Solution45 {
+    public boolean isContinuous(int[] numbers) {
+        if (numbers == null || numbers.length == 0) return false;
+        int[] map = new int[14];
+        int max = 0;
+        int min = 14;
+        boolean flag = true;
+        for (int num: numbers) {
+            if (map[num] == 0) map[num] = 1;
+            else {
+                map[num]++;
+                if (num != 0) flag = false;
+            }
+            if (num > max) max = num;
+            if (num < min & num != 0) min = num;
+        }
+        return (max - min < 5) && flag && numbers.length == 5;
+
+    }
+
+}
