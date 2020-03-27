@@ -1495,3 +1495,137 @@ class Solution49 {
         return res;
     }
 }
+
+// 0327
+
+/*
+在一个长度为n的数组里的所有数字都在0到n-1的范围内。
+数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。
+请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。
+ */
+class Solution50 {
+    // Parameters:
+    //    numbers:     an array of integers
+    //    length:      the length of array numbers
+    //    duplication: (Output) the duplicated number in the array number,length of duplication array is 1,so using duplication[0] = ? in implementation;
+    //                  Here duplication like pointor in C/C++, duplication[0] equal *duplication in C/C++
+    //    这里要特别注意~返回任意重复的一个，赋值duplication[0]
+    // Return value:       true if the input is valid, and there are some duplications in the array number
+    //                     otherwise false
+    public boolean duplicate(int numbers[],int length,int[] duplication) {
+        if (length == 0 || numbers == null) return false;
+        int[] arr = new int[length];
+        int temp;
+        for (int i = 0; i < length; i++) {
+            if (numbers[i] == i) arr[i] = i;
+            else if (numbers[numbers[i]] != numbers[i]) {
+                temp = numbers[i];
+                arr[i] = numbers[temp];
+                arr[temp] = temp;
+            }
+            else {
+                duplication[0] = numbers[i];
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+/*
+给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],
+其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。
+不能使用除法。（注意：规定B[0] = A[1] * A[2] * ... * A[n-1]，B[n-1] = A[0] * A[1] * ... * A[n-2];）
+ */
+
+
+class Solution51 {
+    public int[] multiply(int[] A) {
+        int length = A.length;
+        int[] arr = new int[length];
+        if (length == 0 || length == 1) return arr;
+
+        int[][] dp = new int[length][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = i; j < length; j++) {
+                if (i == j) dp[i][j] = A[i];
+                else dp[i][j] = dp[i][j - 1] * A[j];
+            }
+        }
+
+        arr[0] = dp[0][length - 1];
+        arr[length - 1] = dp[0][length - 2];
+        for (int i = 1; i < length - 1; i++) arr[i] = dp[0][i - 1] * dp[i + 1][length - 1];
+        return arr;
+    }
+}
+
+/*
+请实现一个函数用来匹配包括'.'和'*'的正则表达式。
+模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。
+在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配
+ */
+class Solution52 {
+    public boolean match(char[] str, char[] pattern) {
+        boolean[][] dp = new boolean[str.length + 1][pattern.length + 1];
+        dp[0][0] = true;
+        for (int i = 1; i < dp[0].length; i ++) {
+            if(pattern[i - 1] == '*') dp[0][i] = dp[0][i - 2];
+        }
+        for (int i = 1; i < dp.length; i ++) {
+            for (int j = 1; j < dp[0].length; j ++) {
+                if(pattern[j - 1] == '.' || pattern[j - 1] == str[i - 1]) dp[i][j] = dp[i - 1][j - 1];
+                else if(pattern[j - 1] == '*') {
+                    if(pattern[j - 2] != str[i - 1] && pattern[j - 2] != '.') dp[i][j] = dp[i][j - 2];
+                    else dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
+                }
+            }
+        }
+        return dp[str.length][pattern.length];
+    }
+}
+
+/*
+请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。
+例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。
+但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+ */
+class Solution53 {
+    public boolean isNumeric(char[] str) {
+        char[] arr = "+-n.ne+-n".toCharArray();
+        int[][] fsm = new int[][]{
+                //+  -  n  .  n  e  +  -  n
+                {1, 1, 1, 1, 0, 0, 0, 0, 0},    // # start
+                {0, 0, 1, 1, 0, 0, 0, 0, 0},    // +
+                {0, 0, 1, 1, 0, 0, 0, 0, 0},    // -
+                {0, 0, 1, 1, 0, 1, 0, 0, 0},    // n
+                {0, 0, 0, 0, 1, 0, 0, 0, 0},    // .
+                {0, 0, 0, 0, 1, 1, 0, 0, 0},    // n
+                {0, 0, 0, 0, 0, 0, 1, 1, 1},    // e
+                {0, 0, 0, 0, 0, 0, 0, 0, 1},    // +
+                {0, 0, 0, 0, 0, 0, 0, 0, 1},    // -
+                {0, 0, 0, 0, 0, 0, 0, 0, 1}     // n
+        };
+        int cur = 0;
+        for (int i = 0; i < str.length; i++) {
+            int j;
+            for (j = 0; j < 9; j++) {
+                if (fsm[cur][j] == 1) {
+                    if (('0' <= str[i] && str[i] <= '9' && arr[j] == 'n')
+                            || ((str[i] == 'E' || str[i] == 'e') && arr[j] == 'e')
+                            || (str[i] == arr[j])) {
+                        cur = j + 1;
+                        break;
+                    }
+                }
+            }
+            if (j == 9) return false; // 一个都没法转移，就false
+        }
+        return cur == 3 || cur == 4 || cur == 5 || cur == 9;
+    }
+
+    public static void main(String[] args) {
+        Solution53 test = new Solution53();
+        boolean res = test.isNumeric(new char[]{'+', '1', 'e', '6', '7'});
+    }
+}
