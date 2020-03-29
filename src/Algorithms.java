@@ -195,6 +195,4 @@ public class Algorithms {
         return countChange(n - coins[m - 1], coins, m) + countChange(n, coins, m -1);
 
     }
-
-
 }
