@@ -81,6 +81,12 @@ public class Algorithms {
         }
     } // O(nlogn)
 
+    public static int quickSelect(int[] array, int low, int high, int target) {
+        int pivot = partition(array, low, high);
+        if (target == pivot - low + 1) return array[pivot];
+        else if (target < pivot - low + 1) return quickSelect(array, low, pivot - 1, target);
+        else return quickSelect(array, pivot + 1, high, target - (pivot - low + 1));
+    }
     // MergeSort
     public static void mergeSort(int[] array, int low, int high) {
         if (low < high) {
@@ -194,5 +200,9 @@ public class Algorithms {
 
         return countChange(n - coins[m - 1], coins, m) + countChange(n, coins, m -1);
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println((12 & 1) == 1);
     }
 }

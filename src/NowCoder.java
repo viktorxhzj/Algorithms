@@ -1592,40 +1592,375 @@ class Solution52 {
  */
 class Solution53 {
     public boolean isNumeric(char[] str) {
-        char[] arr = "+-n.ne+-n".toCharArray();
-        int[][] fsm = new int[][]{
-                //+  -  n  .  n  e  +  -  n
-                {1, 1, 1, 1, 0, 0, 0, 0, 0},    // # start
-                {0, 0, 1, 1, 0, 0, 0, 0, 0},    // +
-                {0, 0, 1, 1, 0, 0, 0, 0, 0},    // -
-                {0, 0, 1, 1, 0, 1, 0, 0, 0},    // n
-                {0, 0, 0, 0, 1, 0, 0, 0, 0},    // .
-                {0, 0, 0, 0, 1, 1, 0, 0, 0},    // n
-                {0, 0, 0, 0, 0, 0, 1, 1, 1},    // e
-                {0, 0, 0, 0, 0, 0, 0, 0, 1},    // +
-                {0, 0, 0, 0, 0, 0, 0, 0, 1},    // -
-                {0, 0, 0, 0, 0, 0, 0, 0, 1}     // n
-        };
-        int cur = 0;
-        for (int i = 0; i < str.length; i++) {
-            int j;
-            for (j = 0; j < 9; j++) {
-                if (fsm[cur][j] == 1) {
-                    if (('0' <= str[i] && str[i] <= '9' && arr[j] == 'n')
-                            || ((str[i] == 'E' || str[i] == 'e') && arr[j] == 'e')
-                            || (str[i] == arr[j])) {
-                        cur = j + 1;
-                        break;
-                    }
+        int state = 0;
+        for (char c : str) {
+            if (c == ' ') return false;
+            switch (state) {
+                case 0:
+                    if (c == '+' || c == '-') state = 1;
+                    else if (c >= '0' && c <= '9') state = 2;
+                    else if (c == '.') state = 7;
+                    else return false;
+                    break;
+                case 1:
+                    if (c >= '0' && c <= '9') state = 2;
+                    else if (c == '.') state = 7;
+                    else return false;
+                    break;
+                case 2:
+                    if (c >= '0' && c <= '9') continue;
+                    else if (c == '.') state = 4;
+                    else if (c == 'e') state = 3;
+                    else return false;
+                    break;
+                case 3:
+                    if (c >= '0' && c <= '9') state = 5;
+                    else if (c == '+' || c == '-') state = 6;
+                    else return false;
+                    break;
+                case 4:
+                    if (c >= '0' && c <= '9') continue;
+                    else if (c == 'e') state = 3;
+                    else return false;
+                    break;
+                case 5:
+                    if (c >= '0' && c <= '9') continue;
+                    else return false;
+                case 6:
+                    if (c >= '0' && c <= '9') state = 5;
+                    else return false;
+                    break;
+                case 7:
+                    if (c >= '0' && c <= '9') state = 4;
+                    else return false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return state == 2 || state == 4 || state == 5;
+    }
+}
+
+// 0329
+
+/*
+请实现一个函数用来找出字符流中第一个只出现一次的字符。
+例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。
+当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。
+ */
+
+// LinkedHashMap!
+class Solution54 {
+    private LinkedHashMap<Character, Integer> map = new LinkedHashMap<>();
+    //Insert one char from stringstream
+    public void Insert(char ch)
+    {
+        if (!map.containsKey(ch)) map.put(ch, 1);
+        else map.put(ch, map.get(ch) + 1);
+    }
+    //return the first appearence once char in current stringstream
+    public char FirstAppearingOnce()
+    {
+        for (Map.Entry<Character, Integer> entry: map.entrySet()) {
+            if (entry.getValue() == 1) return entry.getKey();
+        }
+        return '#';
+    }
+}
+
+/*
+给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。
+ */
+class Solution55 {
+    ArrayList<ListNode> list = new ArrayList<>();
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        while (pHead != null) {
+            if (list.contains(pHead)) return pHead;
+            else list.add(pHead);
+            pHead = pHead.next;
+        }
+        return null;
+    }
+}
+
+/*
+在一个排序的链表中，存在重复的结点，
+请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。
+例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+ */
+class Solution56 {
+    HashMap<Integer, Boolean> map = new HashMap<>();
+    public ListNode deleteDuplication(ListNode pHead) {
+        ListNode cur = pHead;
+        while (cur != null) {
+            if (!map.containsKey(cur.val)) map.put(cur.val, false);
+            else map.put(cur.val, true);
+            cur = cur.next;
+        }
+        ListNode Head = new ListNode(0);
+        Head.next = pHead;
+        ListNode pre = Head;
+        cur = pHead;
+        while (cur != null) {
+            if (!map.get(cur.val)) {
+                pre = cur;
+            }
+            else {
+                pre.next = cur.next;
+            }
+            cur = cur.next;
+        }
+        return Head.next;
+    }
+}
+
+/*
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。
+注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+ */
+class Solution57UNSOLVED {
+    public TreeLinkNode GetNext(TreeLinkNode pNode) {
+        return null;
+    }
+}
+
+/*
+请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+ */
+class Solution58 {
+    boolean isSymmetrical(TreeNode pRoot)
+    {
+        if (pRoot == null) return true;
+        return comRoot(pRoot.left, pRoot.right);
+    }
+    private boolean comRoot(TreeNode left, TreeNode right) {
+        if(left == null) return right==null;
+        if(right == null) return false;
+        return left.val == right.val && comRoot(left.right, right.left) && comRoot(left.left, right.right);
+    }
+}
+
+/*
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，
+第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+ */
+class Solution59 {
+    public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+
+        if (pRoot == null) return res;
+        queue.offer(pRoot);
+        boolean isOdd = true;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ArrayList<Integer> help = new ArrayList<>();
+            if (isOdd) {
+                for (int i = 0; i < size; i++) {
+                    TreeNode temp = queue.poll();
+                    help.add(temp.val);
+                    if (temp.left != null) queue.offer(temp.left);
+                    if (temp.right != null) queue.offer(temp.right);
                 }
             }
-            if (j == 9) return false; // 一个都没法转移，就false
+            else {
+                Stack<Integer> stack = new Stack<>();
+                for (int i = 0; i < size; i++) {
+                    TreeNode temp = queue.poll();
+                    stack.push(temp.val);
+                    if (temp.left != null) queue.offer(temp.left);
+                    if (temp.right != null) queue.offer(temp.right);
+                }
+                while (!stack.isEmpty()) help.add(stack.pop());
+            }
+            res.add(help);
+            isOdd = !isOdd;
         }
-        return cur == 3 || cur == 4 || cur == 5 || cur == 9;
+        return res;
+
+    }
+}
+
+/*
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+ */
+class Solution60 {
+    ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        if (pRoot == null) return res;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(pRoot);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = queue.poll();
+                list.add(temp.val);
+                if (temp.left != null) queue.offer(temp.left);
+                if (temp.right != null) queue.offer(temp.right);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+}
+
+/*
+请实现两个函数，分别用来序列化和反序列化二叉树
+
+二叉树的序列化是指：把一棵二叉树按照某种遍历方式的结果以某种格式保存为字符串，
+从而使得内存中建立起来的二叉树可以持久保存。序列化可以基于先序、中序、后序、层序的二叉树遍历方式来进行修改，
+序列化的结果是一个字符串，序列化时通过 某种符号表示空节点（#），以 ！ 表示一个结点值的结束（value!）。
+
+二叉树的反序列化是指：根据某种遍历顺序得到的序列化字符串结果str，重构二叉树。
+ */
+class Solution61 {
+    String Serialize(TreeNode root) {
+        if (root == null) return "#";
+        StringBuilder builder = new StringBuilder();
+        pre(root, builder);
+        return builder.toString();
+    }
+    public void pre(TreeNode node, StringBuilder builder) {
+        if (node == null) builder.append('#');
+        else {
+            builder.append(node.val + ',');
+            pre(node.left, builder);
+            pre(node.right, builder);
+        }
+    }
+
+    TreeNode Deserialize(String str) {
+        Queue<Character> queue = new LinkedList<>();
+        for (int i = 0; i < str.length(); i++) queue.offer(str.charAt(i));
+        return form(queue);
+    }
+
+    public TreeNode form(Queue<Character> q) {
+        if (q.peek() == '#') {
+            q.poll();
+            return null;
+        }
+        int res = 0;
+        while (q.peek() != ',') {
+            res *= 10;
+            res += (q.poll() - '0');
+        }
+        q.poll();
+        TreeNode cur = new TreeNode(res);
+        cur.left = form(q);
+        cur.right = form(q);
+        return cur;
+    }
+
+}
+
+// 0330
+
+/*
+给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，按结点数值大小顺序第三小结点的值为4。
+ */
+class Solution62 {
+    TreeNode KthNode(TreeNode pRoot, int k) {
+        if (pRoot == null || k == 0) return null;
+        ArrayList<TreeNode> list = new ArrayList<>();
+        in(pRoot, list);
+        if (k > list.size()) return null;
+        else return list.get(k - 1);
+    }
+
+    public void in(TreeNode node, ArrayList<TreeNode> arr) {
+        if (node == null) return ;
+        in(node.left, arr);
+        arr.add(node);
+        in(node.right, arr);
+    }
+}
+
+/*
+如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，
+那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，
+那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，
+使用GetMedian()方法获取当前读取数据的中位数。
+ */
+class Solution63 {
+    public void Insert(Integer num) {
+
+    }
+
+    public Double GetMedian() {
+        return 0.0;
+    }
+}
+
+/*
+给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，
+他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个：
+{[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}，
+{2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。
+ */
+class Solution64 {
+    public ArrayList<Integer> maxInWindows(int [] num, int size) {
+        return null;
+
+
+    }
+}
+
+class Solution65 {
+    public boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+        if (rows == 0 || cols == 0 || str.length == 0) return false;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i * cols + j] == str[0] && find(matrix, i, j, str, 0, rows, cols))  return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean find(char[] matrix, int i, int j, char[] str, int length, int rows, int cols) {
+        if (i >= rows || j >= cols || i < 0 || j < 0) return false;
+        length++;
+        if (length > str.length) return false;
+        if (matrix[i * cols + j] != str[length - 1]) return false;
+        if (length == str.length) return true;
+        char temp = matrix[i * cols + j];
+        matrix[i * cols + j] = '/';
+        boolean res = find(matrix, i + 1, j, str, length, rows, cols)
+                    || find(matrix, i, j + 1, str, length, rows, cols)
+                    || find(matrix, i - 1 , j, str, length, rows, cols)
+                    || find(matrix, i, j - 1, str, length, rows, cols);
+        matrix[i * cols + j] = temp;
+        return res;
     }
 
     public static void main(String[] args) {
-        Solution53 test = new Solution53();
-        boolean res = test.isNumeric(new char[]{'+', '1', 'e', '6', '7'});
+        Solution65 test = new Solution65();
+        char[] t = "ABCESFCSADEE".toCharArray();
+        char[] s = "ABCCED".toCharArray();
+        System.out.println(test.hasPath(t, 3, 4, s));
+    }
+}
+
+class Solution66 {
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>();
+    }
+}
+
+/*
+给你一根长度为n的绳子，请把绳子剪成整数长的m段（m、n都是整数，n>1并且m>1），
+每段绳子的长度记为k[0],k[1],...,k[m]。请问k[0]xk[1]x...xk[m]可能的最大乘积是多少？
+例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
+ */
+
+
+//DP[i][j] = max(DP[i][k] * DP[k][j])
+
+class Solution67 {
+    public int cutRope(int target) {
+        return 0;
     }
 }
