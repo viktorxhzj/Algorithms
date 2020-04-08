@@ -1,3 +1,6 @@
+import datastructure.ListNode;
+import datastructure.TreeNode;
+
 import java.util.*;
 
 class FindRepeatNumber {

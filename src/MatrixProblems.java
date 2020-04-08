@@ -1,11 +1,9 @@
-public class MatrixProblems {
-    /**
-     * 剑指29
-     * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
-     * 思路：旋转矩阵
-     * @param matrix
-     * @return
-     */
+/**
+ * 剑指29
+ * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+ * 思路：旋转矩阵
+ */
+class JZ29 {
     public int[] spiralOrder(int[][] matrix) {
         if (matrix.length == 0) return new int[0];
         int[] res = new int[matrix.length * matrix[0].length];

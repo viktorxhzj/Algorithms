@@ -1,20 +1,22 @@
-public class ArrayProblems {
-    /**
-     * 剑指21
-     * 调整该数组中数字的顺序，使得所有奇数位于数组的前半部分，所有偶数位于数组的后半部分。
-     * 思路：首尾双指针
-     * @param nums
-     * @return
-     */
-    public int[] exchange2(int[] nums) {
-        int i = 0, j = nums.length - 1, temp;
-        while (i < j) {
-            while (i < j && (nums[i] & 1) == 1) i++;
-            while (i < j && (nums[j] & 1) == 0) j--;
-            temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+
+
+
+/**
+ * 剑指39
+ * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+ * 思路：摩尔投票法
+ */
+class JZ39 {
+    public int majorityElement(int[] nums) {
+        int x = 0, votes = 0;
+        for (int num : nums) {
+            if (votes == 0) x = num;
+            votes += num == x ? 1 : -1;
         }
-        return nums;
+        return x;
     }
 }
+

@@ -1,6 +1,8 @@
-import sun.reflect.generics.tree.Tree;
+import datastructure.ListNode;
+import datastructure.RandomListNode;
+import datastructure.TreeLinkNode;
+import datastructure.TreeNode;
 
-import javax.naming.PartialResultException;
 import java.util.*;
 
 /*
