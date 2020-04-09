@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * 剑指38
@@ -13,7 +16,9 @@ class JZ38 {
         char[] strs = s.toCharArray();
         boolean[] used = new boolean[strs.length];
         dfs(builder, s.toCharArray(), used, 0, strs.length);
-        return list.toArray(new String[0]);
+        String[] res = new String[list.size()];
+        list.toArray(res);
+        return res;
     }
 
     public void dfs(StringBuilder builder, char[] strs, boolean[] used, int depth, int length) {
@@ -33,3 +38,4 @@ class JZ38 {
         }
     }
 }
+

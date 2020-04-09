@@ -6,7 +6,7 @@ public class TreeLinkNode {
     public TreeLinkNode right = null;
     public TreeLinkNode next = null;
 
-    TreeLinkNode(int val) {
+    public TreeLinkNode(int val) {
         this.val = val;
     }
 }
