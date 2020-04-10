@@ -102,3 +102,40 @@ class JZ35 {
         return Head.next;
     }
 }
+
+/**
+ * 剑指52
+ * 输入两个链表，找出它们的第一个公共节点。
+ * 思路：双指针
+ */
+class JZ52 {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int countA = 0, countB = 0;
+        ListNode a = headA;
+        ListNode b = headB;
+        while (a != null) {
+            a = a.next;
+            countA++;
+        }
+        while (b != null) {
+            b = b.next;
+            countB++;
+        }
+        a = headA;
+        b = headB;
+        if (countA > countB) {
+            for (int i = 0; i < countA - countB; i++) a = a.next;
+        }
+        if (countA < countB) {
+            for (int i = 0; i < countB - countA; i++) b = b.next;
+        }
+        while (a != null && b != null) {
+            if (a == b) return a;
+            else {
+                a = a.next;
+                b = b.next;
+            }
+        }
+        return null;
+    }
+}

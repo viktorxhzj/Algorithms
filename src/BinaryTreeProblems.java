@@ -232,6 +232,29 @@ class JZ37 {
 }
 
 /**
+ * 剑指55-I
+ * 输入一棵二叉树的根节点，求该树的深度。
+ *
+ * 思路：DFS
+ */
+class JZ55I {
+    public int res = 0;
+    public int maxDepth(TreeNode root) {
+        dfs(root, 0);
+        return res;
+    }
+
+    public void dfs(TreeNode node, int depth) {
+        if (node == null) {
+            if (depth > res) res = depth;
+            return ;
+        }
+        dfs(node.left, depth + 1);
+        dfs(node.right, depth + 1);
+    }
+}
+
+/**
  * LeetCode 257
  * 给定一个二叉树，返回所有从根节点到叶子节点的路径。
  */
@@ -259,5 +282,35 @@ class LC257 {
             stack.removeLast();
         }
         stack.removeLast();
+    }
+}
+
+/**
+ * 剑指55-II
+ * 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。
+ *
+ * 思路：DFS
+ */
+class JZ55II {
+    public boolean res = true;
+    public boolean isBalanced(TreeNode root) {
+        dfs(root);
+        return res;
+    }
+
+    public int dfs(TreeNode node) {
+        if (node == null) return -1;
+        int left = dfs(node.left) + 1;
+        int right = dfs(node.right) + 1;
+        if (Math.abs(left - right) > 1) res = false;
+        return Math.max(left, right);
+    }
+
+    public static void main(String[] args) {
+        JZ55II test = new JZ55II();
+        TreeNode head = new TreeNode(1);
+        head.right = new TreeNode(2);
+        head.right.right = new TreeNode(3);
+        System.out.println(test.isBalanced(head));
     }
 }

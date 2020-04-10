@@ -42,36 +42,6 @@ class FindRepeatNumber {
     }
 }
 
-class LeetCode1 {
-    // [22ms, 42.72%] Bruteforce O(n^2)
-    public static int[] twoSum(int[] nums, int target) {
-        int length = nums.length;
-        if (length < 2) {
-            return new int[]{};
-        }
-        for (int i = 0; i < length - 1; i++) {
-            for (int j = i + 1; j < length; j++) {
-                if (target == (nums[i] + nums[j])) {
-                    return new int[]{i, j};
-                }
-            }
-        }
-        return new int[]{};
-    }
-    // [3ms, 97.17%] Hashmap O(n)
-    public static int[] twoSum(int target, int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if ((map.containsKey(complement)) && (map.get(complement) != i)) {
-                return new int[]{map.get(complement), i};
-            }
-            map.put(nums[i], i);
-        }
-        return new int[]{};
-    }
-}
-
 class LeetCode5 {
     public String longestPalindrome(String s) {
         if (s.equals("")) return "";

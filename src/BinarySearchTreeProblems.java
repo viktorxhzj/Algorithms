@@ -27,7 +27,7 @@ class JZ33 {
 /**
  * 剑指36
  * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
- * 思路：中序遍历即为排序
+ * 思路：In-Order即为排序
  */
 
 class JZ36 {
@@ -62,5 +62,31 @@ class JZ36 {
         inOrder(node.left, list);
         list.add(node);
         inOrder(node.right, list);
+    }
+}
+
+/**
+ * 剑指54
+ * 给定一棵二叉搜索树，请找出其中第k大的节点。
+ *
+ * 思路：In-Order
+ */
+class JZ54 {
+    int count = 0;
+    int res;
+    public int kthLargest(TreeNode root, int k) {
+        inOrder(root, k);
+        return res;
+    }
+
+    public void inOrder(TreeNode node, int k) {
+        if (node == null) return ;
+        inOrder(node.right, k);
+        count++;
+        if (count == k) {
+            res = node.val;
+            return ;
+        }
+        inOrder(node.left, k);
     }
 }
