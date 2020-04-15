@@ -127,3 +127,46 @@ class JZ51 {
         System.out.println("END");
     }
 }
+
+/**
+ * 剑指59
+ * 从扑克牌中随机抽5张牌，判断是不是一个顺子
+ *
+ * 思路：排序
+ */
+class JZ61 {
+    public boolean isStraight(int[] nums) {
+        if (nums.length != 5) return false;
+        int temp;
+        for (int i = 0; i < 5; i++) {
+            for (int j = i + 1; j < 5; j++) {
+                if (nums[j] == nums[i] && nums[j] != 0) return false;
+                if (nums[j] < nums[i]) {
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+        temp = 0;
+        while (nums[temp] == 0) temp++;
+        if (temp == 0) return (nums[4] - nums[0] < 5);
+        else return (nums[4] - nums[temp] <= 5);
+    }
+}
+
+/**
+ * 剑指62
+ * 0,1,,n-1这n个数字排成一个圆圈，从数字0开始，每次从这个圆圈里删除第m个数字。求出这个圆圈里剩下的最后一个数字。
+ *
+ * 思路：无
+ */
+class JZ62 {
+    public int lastRemaining(int n, int m) {
+        int pos = 0; // 最终活下来那个人的初始位置
+        for(int i = 2; i <= n; i++){
+            pos = (pos + m) % i;  // 每次循环右移
+        }
+        return pos;
+    }
+}

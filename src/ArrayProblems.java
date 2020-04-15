@@ -110,3 +110,148 @@ class JZ53II {
         return -1;
     }
 }
+
+/**
+ * 剑指58-II
+ * 字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。
+ *
+ * 思路：切片
+ */
+class JZ58II {
+    public String reverseLeftWords(String s, int n) {
+        return s.substring(n) + s.substring(0, n);
+    }
+}
+
+/**
+ * 剑指64
+ * 求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+ *
+ * 思路：短路原则！
+ */
+class JZ64 {
+    public int sumNums(int n) {
+        int sum = n;
+        boolean arg = (n > 0) && ((sum += sumNums(n-1)) > 0);
+        return sum;
+    }
+}
+
+/**
+ * 剑指66
+ * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中 B 中的元素 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。
+ *
+ */
+class JZ66 {
+    public int[] constructArr(int[] a) {
+        if (a.length <= 1) return new int[0];
+        int[] dp1 = new int[a.length], dp2 = new int[a.length], res = new int[a.length];
+        dp1[0] = a[0];
+        dp2[dp2.length - 1] = a[a.length - 1];
+        for (int i = 1; i < dp1.length; i++) dp1[i] = a[i] * dp1[i - 1];
+        for (int i = dp2.length - 2; i >= 0; i--) dp2[i] = a[i] * dp2[i + 1];
+        res[0] = dp2[1];
+        for (int i = 1; i < dp1.length - 1; i++) {
+            res[i] = dp1[i - 1] * dp2[i + 1];
+        }
+        res[res.length - 1] = dp1[dp1.length - 2];
+        return res;
+    }
+}
+
+/**
+ * LeetCode 7
+ * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+ *
+ */
+class LC7 {
+    public int reverse(int x) {
+        int sum = 0;
+        if (x > 0) {
+            int m = Integer.MAX_VALUE;
+            while (x != 0) {
+                if (sum > m / 10) return 0;
+                sum *= 10;
+                if (m - sum < x % 10) return 0;
+                sum += x % 10;
+                x /= 10;
+            }
+        }
+        else {
+            int m = Integer.MIN_VALUE;
+            while (x != 0) {
+                if (sum < m / 10) return 0;
+                sum *= 10;
+                if (sum < m - x % 10) return 0;
+                sum += x % 10;
+                x /= 10;
+            }
+        }
+        return sum;
+    }
+}
+
+/**
+ * 剑指67
+ * 请你来实现一个 atoi 函数，使其能将字符串转换成整数。
+ *
+ */
+class LC8 {
+    public int strToInt(String str) {
+        char[] cs = str.toCharArray();
+        int i = 0;
+        boolean neg = false;
+        while (i < cs.length && cs[i] == ' ') i++;
+        if (i == cs.length) return 0;
+        if (cs[i] != '+' && cs[i] != '-' && (cs[i] - '0' < 0 || cs[i] - '0' > 9)) return 0;
+        if (cs[i] == '-') {
+            neg = true;
+            i++;
+        }
+        else if (cs[i] == '+') i++;
+        int res = 0, temp = 0;
+        while (i < cs.length && cs[i] - '0' >= 0 && cs[i] - '0' <= 9) {
+            temp = cs[i] - '0';
+            if (neg) {
+                if (res < Integer.MIN_VALUE / 10) return Integer.MIN_VALUE;
+                res *= 10;
+                if (Integer.MIN_VALUE - res > -temp) return Integer.MIN_VALUE;
+                res -= temp;
+
+            }
+            else {
+                if (res > Integer.MAX_VALUE / 10) return Integer.MAX_VALUE;
+                res *= 10;
+                if (Integer.MAX_VALUE - res < temp) return Integer.MAX_VALUE;
+                res += temp;
+
+            }
+            i++;
+        }
+        return res;
+    }
+}
+
+/**
+ * LeetCode 9
+ * 回文数
+ */
+class LC9 {
+    public boolean isPalindrome(int x) {
+        if (x < 0) return false;
+        return x == reverse(x);
+    }
+
+    public int reverse(int x) {
+        int sum = 0;
+        int m = Integer.MAX_VALUE;
+        while (x != 0) {
+            if (sum > m / 10) return 0;
+            sum *= 10;
+            if (m - sum < x % 10) return 0;
+            sum += x % 10;
+            x /= 10;
+        }
+        return sum;
+    }
+}

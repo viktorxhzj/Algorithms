@@ -139,3 +139,136 @@ class JZ52 {
         return null;
     }
 }
+
+/**
+ * LeetCode 2
+ * Two Sum
+ */
+class LC2 {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+        int carry = 0;
+
+        while (l1 != null && l2 != null) {
+            cur.next = new ListNode((l1.val + l2.val + carry) % 10);
+            if (l1.val + l2.val + carry >= 10) carry = 1;
+            else carry = 0;
+            cur = cur.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        while (l1 != null) {
+            cur.next = new ListNode((l1.val + carry) % 10);
+            if (l1.val + carry >= 10) carry = 1;
+            else carry = 0;
+            cur = cur.next;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            cur.next = new ListNode((l2.val + carry) % 10);
+            if (l2.val + carry >= 10) carry = 1;
+            else carry = 0;
+            cur = cur.next;
+            l2 = l2.next;
+        }
+        if (carry == 1) cur.next = new ListNode(1);
+
+
+        return head.next;
+    }
+}
+
+class LC445 {
+    int carry = 0;
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int len1 = 0, len2 = 0;
+        ListNode p = l1, q = l2;
+        while (p != null && q != null) {
+            len1++;
+            len2++;
+            p = p.next;
+            q = q.next;
+        }
+        while (p != null) {
+            len1++;
+            p = p.next;
+        }
+        while (q != null) {
+            len2++;
+            q = q.next;
+        }
+        p = l1;
+        q = l2;
+        int dif = len1 - len2;
+        ListNode head;
+        if (dif == 0) {
+            head = recur(p, q, 0, len1);
+            if (carry == 0) return head;
+            ListNode newHead = new ListNode(1);
+            newHead.next = head;
+            return newHead;
+        }
+        else if (dif < 0) {
+            for (int k = dif; k < 0; k++) q = q.next;
+            ListNode pre = recur(l1, q, 0, len1);
+            head = sRecur(l2, 0, -dif);
+            q = head;
+            while (q.next != null) q = q.next;
+            q.next = pre;
+        }
+        else {
+            for (int k = 0; k < dif; k++) p = p.next;
+            ListNode pre = recur(p, l2, 0, len2);
+            head = sRecur(l1, 0, dif);
+            p = head;
+            while (p.next != null) p = p.next;
+            p.next = pre;
+        }
+        if (carry == 0) return head;
+        ListNode newHead = new ListNode(1);
+        newHead.next = head;
+        return newHead;
+    }
+
+    public ListNode recur(ListNode l1, ListNode l2, int depth, int length) {
+        if (depth == length) return null;
+        ListNode next = recur(l1.next, l2.next, depth + 1, length);
+        int res = l1.val + l2.val + carry;
+        if (res >= 10) {
+            carry = 1;
+            res %= 10;
+        }
+        else carry = 0;
+        ListNode cur = new ListNode(res);
+        cur.next = next;
+        return cur;
+    }
+
+    public ListNode sRecur(ListNode node, int depth, int length) {
+        if (depth == length) return null;
+        ListNode next = sRecur(node.next, depth + 1, length);
+        int res = node.val + carry;
+        if (res >= 10) {
+            carry = 1;
+            res %= 10;
+        }
+        else carry = 0;
+        ListNode cur = new ListNode(res);
+        cur.next = next;
+        return cur;
+    }
+
+    public static void main(String[] args) {
+        ListNode l1 = new ListNode(7);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(4);
+        l1.next.next.next = new ListNode(3);
+        ListNode l2 = new ListNode(5);
+        l2.next = new ListNode(6);
+        l2.next.next = new ListNode(4);
+        LC445 test = new LC445();
+        ListNode res = test.addTwoNumbers(l1, l2);
+        System.out.println("END");
+    }
+}

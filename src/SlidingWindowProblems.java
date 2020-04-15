@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * 剑指48
@@ -26,3 +28,35 @@ class JZ48II {
         test.lengthOfLongestSubstring("abba");
     }
 }
+
+/**
+ * 剑指57-II
+ * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）
+ *
+ * 思路：前后双指针
+ */
+class JZ57II {
+    public int[][] findContinuousSequence(int target) {
+        ArrayList<int []> list = new ArrayList<>();
+        int i = 1, j = 1, sum = 1;
+        while (j <= target / 2 + 1) {
+            if (sum < target) {
+                j++;
+                sum += j;
+            }
+            else if (sum == target) {
+                int[] local = new int[j - i + 1];
+                for (int k = i; k <= j; k++) local[k - i] = k;
+                list.add(local);
+                sum -= i;
+                i++;
+            }
+            else {
+                sum -= i;
+                i++;
+            }
+        }
+        return list.toArray(new int[][]{});
+    }
+}
+

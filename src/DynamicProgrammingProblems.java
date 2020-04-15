@@ -111,3 +111,107 @@ class JZ49 {
         return dp[n - 1];
     }
 }
+
+/**
+ * 剑指63
+ * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
+ *
+ * 思路：动态规划
+ */
+class JZ63 {
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) return 0;
+        int[] dp = new int[prices.length];
+        int res = 0;
+        dp[0] = 0;
+        for (int i = 1; i < dp.length; i++) {
+            dp[i] = Math.max(0, dp[i - 1] + prices[i] - prices[i - 1]);
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    public int maxProfit2(int[] prices) {
+        int res = 0;
+        int dp = 0;
+        for (int i = 1; i < prices.length; i++) {
+            dp = Math.max(0, dp + prices[i] - prices[i - 1]);
+            res = Math.max(res, dp);
+        }
+        return res;
+    }
+
+    public int maxProfit3(int[] prices) {
+        int cost = Integer.MAX_VALUE, profit = 0;
+        for(int price : prices) {
+            cost = Math.min(cost, price);
+            profit = Math.max(profit, price - cost);
+        }
+        return profit;
+    }
+
+}
+
+/**
+ * LeetCode 10
+ * 正则表达式匹配
+ */
+class LC10 {
+    public boolean isMatch(String s, String p) {
+        char[] str = s.toCharArray();
+        char[] pattern = p.toCharArray();
+        boolean[][] dp = new boolean[str.length + 1][pattern.length + 1];
+        dp[0][0] = true;
+        for (int i = 1; i < dp[0].length; i ++) {
+            if(pattern[i - 1] == '*') dp[0][i] = dp[0][i - 2];
+        }
+        for (int i = 1; i < dp.length; i ++) {
+            for (int j = 1; j < dp[0].length; j ++) {
+                if(pattern[j - 1] == '.' || pattern[j - 1] == str[i - 1]) dp[i][j] = dp[i - 1][j - 1];
+                else if(pattern[j - 1] == '*') {
+                    if(pattern[j - 2] != str[i - 1] && pattern[j - 2] != '.') dp[i][j] = dp[i][j - 2];
+                    else dp[i][j] = dp[i][j - 1] || dp[i][j - 2] || dp[i - 1][j];
+                }
+            }
+        }
+        return dp[str.length][pattern.length];
+    }
+}
+
+/**
+ * LeetCode 304
+ */
+class LC304 {
+    int row = 0, col = 0;
+    int[][] dp;
+    public LC304(int[][] matrix) {
+        if (matrix.length != 0) {
+            row = matrix.length;
+            col = matrix[0].length;
+            int i, j;
+            dp = new int[row][col];
+            dp[0][0] = matrix[0][0];
+            for (j = 1; j < col; j++) dp[0][j] = dp[0][j - 1] + matrix[0][j];
+            for (i = 1; i < row; i++) dp[i][0] = dp[i - 1][0] + matrix[i][0];
+            for (i = 1; i < row; i ++) {
+                for (j = 1; j < col; j++) {
+                    dp[i][j] = matrix[i][j] + dp[i][j - 1] + dp[i - 1][j] - dp[i - 1][j - 1];
+                }
+            }
+        }
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        if (row == 0 && col == 0) return 0;
+        if (row1 - 1 < 0 && col1 - 1 < 0) return dp[row2][col2];
+        if (row1 - 1 < 0) return dp[row2][col2] - dp[row2][col1 - 1];
+        if (col1 - 1 < 0) return dp[row2][col2] - dp[row1 - 1][col2];
+        return dp[row2][col2] + dp[row1 - 1][col1 - 1] - dp[row1 - 1][col2] - dp[row2][col1 - 1];
+    }
+}
+
+/**
+ * Your NumMatrix object will be instantiated and called as such:
+ * NumMatrix obj = new NumMatrix(matrix);
+ * int param_1 = obj.sumRegion(row1,col1,row2,col2);
+ */

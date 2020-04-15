@@ -314,3 +314,89 @@ class JZ55II {
         System.out.println(test.isBalanced(head));
     }
 }
+
+/**
+ * 剑指68-II
+ * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+ *
+ * 思路：DFS/递归
+ */
+class JZ68II {
+    Stack<TreeNode> list1 = new Stack<>();
+    Stack<TreeNode> list2 = new Stack<>();
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        dfs1(root, p);
+        dfs2(root, q);
+        TreeNode res = list1.pop();
+        list2.pop();
+        while (!list1.isEmpty() && !list2.isEmpty()) {
+            TreeNode temp = list1.pop();
+            if (temp.val != list2.pop().val) return res;
+            res = temp;
+        }
+
+
+        return res;
+    }
+    public boolean dfs1(TreeNode node, TreeNode k) {
+        if (node == null) return false;
+        if (node.val == k.val) {
+            list1.push(node);
+            return true;
+        }
+        if (dfs1(node.left, k) || dfs1(node.right, k)) {
+            list1.push(node);
+            return true;
+        }
+        return false;
+    }
+    public boolean dfs2(TreeNode node, TreeNode k) {
+        if (node == null) return false;
+        if (node.val == k.val) {
+            list2.push(node);
+            return true;
+        }
+        if (dfs2(node.left, k) || dfs2(node.right, k)) {
+            list2.push(node);
+            return true;
+        }
+        return false;
+    }
+
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null;
+        if (root.val == p.val || root.val == q.val) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) return root;
+        if (left != null) return left;
+        if (right != null) return right;
+        return null;
+    }
+}
+
+/**
+ * LeetCode 563
+ * 给定一个二叉树，计算整个树的坡度。
+ *
+ * 一个树的节点的坡度定义即为，该节点左子树的结点之和和右子树结点之和的差的绝对值。空结点的的坡度是0。
+ *
+ * 整个树的坡度就是其所有节点的坡度之和。
+ *
+ * 思路：post-Order
+ */
+class LC563 {
+    int tilt = 0;
+    public int findTilt(TreeNode root) {
+        posOrder(root);
+        return tilt;
+    }
+
+    private int posOrder(TreeNode node) {
+        if (node == null) return 0;
+        int left = posOrder(node.left);
+        int right = posOrder(node.right);
+        tilt += Math.abs(left - right);
+        return left + right + node.val;
+    }
+}

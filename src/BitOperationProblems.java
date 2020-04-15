@@ -53,3 +53,22 @@ class JZ56II {
         test.singleNumber(new int[]{3, 4, 3, 3});
     }
 }
+
+/**
+ * 剑指65
+ * 写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。
+ *
+ * 思路：位运算
+ */
+class JZ65 {
+    public int add(int a, int b) {
+        int s, c;
+        while (b != 0) {
+            s = a ^ b;
+            c = (a & b) << 1;
+            a = s;
+            b = c;
+        }
+        return a;
+    }
+}
