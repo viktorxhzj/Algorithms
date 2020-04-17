@@ -272,3 +272,58 @@ class LC445 {
         System.out.println("END");
     }
 }
+
+/**
+ * 环形链表
+ *
+ * 思路：超级优雅的双指针。
+ */
+class LC142 {
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (true) {
+            if (fast == null || fast.next == null) return null;
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) break;
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
+    }
+}
+
+
+class LC61 {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null) return null;
+        int len = 0;
+        ListNode cur = head;
+        while (cur != null) {
+            len++;
+            cur = cur.next;
+        }
+        k = k % len;
+        if (k == 0) return head;
+        k = len - k;
+        ListNode old = new ListNode(-1);
+        ListNode pre = old;
+        old.next = head;
+        cur = head;
+
+        while (k > 0) {
+            pre = pre.next;
+            cur = cur.next;
+            k--;
+        }
+        ListNode res = new ListNode(-1);
+        res.next = cur;
+        pre.next = null;
+        while (cur.next != null) cur = cur.next;
+        cur.next = head;
+        return res.next;
+    }
+}

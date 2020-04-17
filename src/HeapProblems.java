@@ -1,4 +1,7 @@
+import datastructure.ListNode;
+
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -29,5 +32,29 @@ class JZ41 {
             return (maxHeap.peek() + minHeap.peek()) * 0.5;
         }
         return maxHeap.peek();
+    }
+}
+
+/**
+ * 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
+ *
+ * 思路：最大堆
+ * 时间复杂度：nlogk
+ */
+class LC23 {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0) return null;
+        PriorityQueue<ListNode> heap = new PriorityQueue<>(lists.length, (o1, o2) -> o1.val - o2.val);
+        for (ListNode node: lists) {
+            if (node != null) heap.offer(node);
+        }
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+        while (!heap.isEmpty()) {
+            cur.next = heap.poll();
+            if (cur.next.next != null) heap.offer(cur.next.next);
+            cur = cur.next;
+        }
+        return head.next;
     }
 }

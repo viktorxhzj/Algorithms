@@ -153,6 +153,29 @@ class JZ63 {
 }
 
 /**
+ * 剑指66
+ * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中 B 中的元素 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。
+ *
+ * 思路：DP
+ */
+class JZ66 {
+    public int[] constructArr(int[] a) {
+        if (a.length <= 1) return new int[0];
+        int[] dp1 = new int[a.length], dp2 = new int[a.length], res = new int[a.length];
+        dp1[0] = a[0];
+        dp2[dp2.length - 1] = a[a.length - 1];
+        for (int i = 1; i < dp1.length; i++) dp1[i] = a[i] * dp1[i - 1];
+        for (int i = dp2.length - 2; i >= 0; i--) dp2[i] = a[i] * dp2[i + 1];
+        res[0] = dp2[1];
+        for (int i = 1; i < dp1.length - 1; i++) {
+            res[i] = dp1[i - 1] * dp2[i + 1];
+        }
+        res[res.length - 1] = dp1[dp1.length - 2];
+        return res;
+    }
+}
+
+/**
  * LeetCode 10
  * 正则表达式匹配
  */
@@ -211,7 +234,36 @@ class LC304 {
 }
 
 /**
- * Your NumMatrix object will be instantiated and called as such:
- * NumMatrix obj = new NumMatrix(matrix);
- * int param_1 = obj.sumRegion(row1,col1,row2,col2);
+ * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）
  */
+class LC62 {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) dp[i][0] = 1;
+        for (int j = 0; j < n; j++) dp[0][j] = 1;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+}
+
+class LC63 {
+    public int uniquePathsWithObstacles(int[][] dp) {
+        dp[0][0] = dp[0][0] == 1? 0: 1;
+        for (int i = 1; i < dp.length; i++) {
+            dp[i][0] = dp[i][0] == 1? 0: dp[i - 1][0];
+        }
+        for (int j = 1; j < dp[0].length; j++) {
+            dp[0][j] = dp[0][j] == 1? 0: dp[0][j - 1];
+        }
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                dp[i][j] = dp[i][j] == 1? 0: dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[dp.length - 1][dp[0].length - 1];
+    }
+}

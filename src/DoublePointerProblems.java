@@ -131,3 +131,30 @@ class LC15 {
         return res;
     }
 }
+
+/**
+ * 最接近的三数之和
+ *
+ * 给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。
+ * 返回这三个数的和。假定每组输入只存在唯一答案。
+ *
+ * 首尾双指针
+ */
+class LC16 {
+    public int threeSumClosest(int[] nums, int target) {
+        int ans = nums[0] + nums[1] + nums[2];
+        Arrays.sort(nums);
+        for (int k = 0; k < nums.length - 2; k++) {
+            int i = k + 1;
+            int j = nums.length - 1;
+            while (i < j) {
+                int sum = nums[i] + nums[j] + nums[k];
+                ans = Math.abs(sum - target) < Math.abs(ans - target) ? sum: ans;
+                if (sum == target) return ans;
+                else if (sum < target) i++;
+                else j--;
+            }
+        }
+        return ans;
+    }
+}
