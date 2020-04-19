@@ -400,3 +400,17 @@ class LC563 {
         return left + right + node.val;
     }
 }
+
+/**
+ * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+ */
+class LC236 {
+    public TreeNode lowestCommonAncestor(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null || node == p || node == q) return node;
+        TreeNode left = lowestCommonAncestor(node.left, p, q);
+        TreeNode right = lowestCommonAncestor(node.right, p, q);
+        if (left == null) return right;
+        if (right == null) return left;
+        return node;
+    }
+}
