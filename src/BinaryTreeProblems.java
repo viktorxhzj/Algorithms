@@ -440,3 +440,74 @@ class LC226 {
         }
     }
 }
+
+class LC94 {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> res = new ArrayList<>();  // 遍历结果
+        if (root == null) return res;
+        TreeNode cur = root;
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {   // 先将所有的左节点的内容压入栈中
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();    // 出栈的时候进行遍历
+            res.add(cur.val);
+            cur = cur.right;     // 代表开始遍历右子树
+        }
+        return res;
+    }
+}
+
+class LC1379 {
+    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+        if (original == null) return null;
+        if (original == target) return cloned;
+        // 递归左子树
+        TreeNode res = getTargetCopy(original.left, cloned.left, target);
+        if (res != null) return res;
+        // 递归右子树
+        res = getTargetCopy(original.right, cloned.right, target);
+        if (res != null) return res;
+        return null;
+    }
+}
+
+class LC106 {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return helper(inorder, postorder, 0, inorder.length - 1, 0, postorder.length - 1);
+    }
+
+    public TreeNode helper(int[] inOrder, int[] postOrder, int iLow, int iHigh, int pLow, int pHigh) {
+        if (iLow > iHigh) return null;
+        TreeNode root = new TreeNode(postOrder[pHigh]);
+        int rootPos = iLow;
+        // 找到根节点在中序遍历中的索引
+        while (inOrder[rootPos] != postOrder[pHigh]) rootPos++;
+        // 递归左子树
+        root.left = helper(inOrder, postOrder, iLow, rootPos - 1, pLow, pLow - iLow + rootPos -1);
+        // 递归右子树
+        root.right = helper(inOrder, postOrder, rootPos + 1, iHigh, pLow - iLow + rootPos, pHigh - 1);
+        return root; 
+    }
+}
+
+class LC105 {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return helper(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+    }
+
+    public TreeNode helper(int[] preOrder, int[] inOrder, int pLow, int pHigh, int iLow, int iHigh) {
+        if (pLow > pHigh) return null;
+        TreeNode root = new TreeNode(preOrder[pLow]);
+        int rootPos = iLow;
+        // 找到根节点在中序遍历中的索引
+        while (inOrder[rootPos] != preOrder[pLow]) rootPos++;
+        // 递归左子树
+        root.left = helper(preOrder, inOrder, pLow + 1, pLow + rootPos - iLow, iLow, rootPos - 1);
+        // 递归右子树
+        root.right = helper(preOrder, inOrder, pLow + rootPos - iLow + 1, pHigh, rootPos + 1, iHigh);
+        return root; 
+    }
+}
