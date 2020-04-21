@@ -72,3 +72,12 @@ class JZ65 {
         return a;
     }
 }
+
+/**
+ * 2的幂
+ */
+class LC231 {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}

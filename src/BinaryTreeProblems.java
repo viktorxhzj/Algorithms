@@ -414,3 +414,29 @@ class LC236 {
         return node;
     }
 }
+
+class LC617 {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null) return t2;
+        if (t2 == null) return t1;
+        TreeNode left = mergeTrees(t1.left, t2.left);
+        TreeNode right = mergeTrees(t1.right, t2.right);
+        t1.left = left;
+        t1.right = right;
+        t1.val += t2.val;
+        return t1;
+    }
+}
+
+class LC226 {
+    class Solution {
+        public TreeNode invertTree(TreeNode root) {
+            if (root == null) return null;
+            TreeNode left = invertTree(root.left);
+            TreeNode right = invertTree(root.right);
+            root.left = right;
+            root.right = left;
+            return root;
+        }
+    }
+}
