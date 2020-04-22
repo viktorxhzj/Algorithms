@@ -97,49 +97,7 @@ class JZ54 {
  *
  * 思路：DFS
  */
-class LC235 {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) return null;
-        if (root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
-        if (root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
-        return root;
-    }
-}
 
-class LC938 {
-    public int rangeSumBST(TreeNode root, int L, int R) {
-        if (root == null) {
-            return 0;
-        }
-        // 不在范围内，请去右子树寻找
-        if (root.val < L) {
-            return rangeSumBST(root.right, L, R);
-        }
-        // 不在范围内，请去左子树寻找。
-        if (root.val > R) {
-            return rangeSumBST(root.left, L, R);
-        }
-        // 在范围内，返回值增加该节点值，并向左右子树寻找
-        return root.val + rangeSumBST(root.left, L, R) + rangeSumBST(root.right, L, R);
-    }
-}
 
-class LC98 {
-    public boolean isValidBST(TreeNode root) {
-        return core(root, null, null);
-    }
 
-    public boolean core(TreeNode node, TreeNode max, TreeNode min) {
-        // 当前节点为空，肯定符合二叉搜索树
-        if (node == null) return true;
 
-        // 当前节点必须小于max值
-        if (max != null && max.val <= node.val) return false;
-
-        // 当前节点必须大于min值
-        if (min != null && min.val >= node.val) return false;
-
-        // 递归左节点：更新max值， 递归右节点：更新min值
-        return core(node.left, node, min) && core(node.right, max, node);
-    }
-}
