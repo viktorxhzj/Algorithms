@@ -6,19 +6,40 @@ import java.util.Stack;
 
 public class LC94 {
     public List<Integer> inorderTraversal(TreeNode root) {
+        // 用来存放结果
+        List<Integer> res = new ArrayList<>();
+
+        // 模拟系统的栈
         Stack<TreeNode> stack = new Stack<>();
-        List<Integer> res = new ArrayList<>();  // 遍历结果
+
         if (root == null) return res;
-        TreeNode cur = root;
-        while (!stack.isEmpty() || cur != null) {
-            while (cur != null) {   // 先将所有的左节点的内容压入栈中
-                stack.push(cur);
-                cur = cur.left;
+
+        TreeNode node = root;
+
+        while (true) {
+            // 如果有左节点就一直进栈
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
             }
-            cur = stack.pop();    // 出栈的时候进行遍历
-            res.add(cur.val);
-            cur = cur.right;     // 代表开始遍历右子树
+            // 进栈完就要出栈，如果空了就退出
+            if (stack.isEmpty()) break;
+
+            // 栈顶节点一定是当前最左节点
+            node = stack.pop();
+            res.add(node.val);
+
+            // 转向右节点
+            node = node.right;
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        LC94 test = new LC94();
+        TreeNode a = new TreeNode(1);
+        a.right = new TreeNode(2);
+        a.right.left = new TreeNode(3);
+        test.inorderTraversal(a);
     }
 }
