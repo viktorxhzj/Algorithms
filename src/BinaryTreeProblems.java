@@ -441,25 +441,6 @@ class LC226 {
     }
 }
 
-class LC94 {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        List<Integer> res = new ArrayList<>();  // 遍历结果
-        if (root == null) return res;
-        TreeNode cur = root;
-        while (!stack.isEmpty() || cur != null) {
-            while (cur != null) {   // 先将所有的左节点的内容压入栈中
-                stack.push(cur);
-                cur = cur.left;
-            }
-            cur = stack.pop();    // 出栈的时候进行遍历
-            res.add(cur.val);
-            cur = cur.right;     // 代表开始遍历右子树
-        }
-        return res;
-    }
-}
-
 class LC1379 {
     public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
         if (original == null) return null;
@@ -509,5 +490,107 @@ class LC105 {
         // 递归右子树
         root.right = helper(preOrder, inOrder, pLow + rootPos - iLow + 1, pHigh, rootPos + 1, iHigh);
         return root; 
+    }
+}
+
+class LC199 {
+    public List<Integer> rightSideView(TreeNode root) {
+        ArrayList<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int k = q.size();
+            for (int i = 0; i < k; i++) {
+                TreeNode temp = q.poll();
+                if (i == 0) res.add(temp.val);
+                if (temp.right != null) q.offer(temp.right);
+                if (temp.left != null) q.offer(temp.left);
+            }
+        }
+        return res;
+    }
+}
+
+class LC102 {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int k = q.size();
+            ArrayList<Integer> temp = new ArrayList<>();
+            while (--k >= 0) {
+                TreeNode node = q.poll();
+                temp.add(node.val);
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+}
+
+class LC103 {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> q = new LinkedList<>();
+        boolean odd = true;
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int k = q.size();
+            ArrayList<Integer> temp = new ArrayList<>();
+            if (odd) {
+                while (--k >= 0) {
+                    TreeNode node = q.poll();
+                    temp.add(node.val);
+                    if (node.left != null) q.offer(node.left);
+                    if (node.right != null) q.offer(node.right);
+                }
+            }
+            else {
+                recur(q, temp, k);
+            }
+            res.add(temp);
+            odd = !odd;
+        }
+        return res;
+    }
+
+    public void recur(Queue<TreeNode> q, ArrayList<Integer> temp, int size) {
+        if (size == 0) return ;
+        TreeNode node = q.poll();
+        if (node.left != null) q.offer(node.left);
+        if (node.right != null) q.offer(node.right);
+        recur(q, temp, size - 1);
+        temp.add(node.val);
+    }
+}
+
+class LC94 {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> res = new ArrayList<>();  // 遍历结果
+        if (root == null) return res;
+        TreeNode cur = root;
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {   // 先将所有的左节点的内容压入栈中
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();    // 出栈的时候进行遍历
+            res.add(cur.val);
+            cur = cur.right;     // 代表开始遍历右子树
+        }
+        return res;
+    }
+}
+
+class LC144 {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        return null;
     }
 }
