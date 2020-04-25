@@ -31,7 +31,7 @@ public class LC103 {
         }
         return res;
     }
-
+    
     public void recur(Queue<TreeNode> q, ArrayList<Integer> temp, int size) {
         if (size == 0) return ;
         TreeNode node = q.poll();

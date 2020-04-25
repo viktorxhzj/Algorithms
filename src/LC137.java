@@ -9,7 +9,7 @@ public class LC137 {
                 sum += num & 1;
             }
             // 点金之笔
-            res ^= (sum % 3) << i;
+            res |= (sum % 3) << i;
         }
         return res;
     }
