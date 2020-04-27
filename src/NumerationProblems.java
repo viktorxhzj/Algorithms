@@ -3,46 +3,6 @@
  *
  * 思路：10进制按位加和
  */
-class LC43 {
-    public String multiply(String num1, String num2) {
-        if (num1.equals("0") || num2.equals("0")) return "0";
-        char[] s1 = num1.toCharArray();
-        char[] s2 = num2.toCharArray();
-        String res = "0";
-        for (int j = s2.length - 1; j >= 0; j--) {
-            int carry = 0;
-            StringBuilder bd = new StringBuilder();
-            for (int k = 0; k < (s2.length - 1 - j); k++) {
-                bd.append('0');
-            }
-            int n2 = s2[j] - '0';
-            for (int i = s1.length -1; i >= 0; i--) {
-                int n1 = s1[i] - '0';
-                bd.append((carry + n1 * n2) % 10);
-                if (carry + n1 * n2 >= 10) carry = (carry + n1 * n2) / 10;
-                else carry = 0;
-            }
-            if (carry != 0) bd.append(carry);
-            res = addStrings(res, bd.reverse().toString());
-        }
-        return res;
-    }
-
-    public String addStrings(String num1, String num2) {
-        StringBuilder builder = new StringBuilder();
-        int carry = 0;
-        for (int i = num1.length() - 1, j = num2.length() - 1;
-             i >= 0 || j >= 0 || carry != 0;
-             i--, j--) {
-            int x = i < 0 ? 0 : num1.charAt(i) - '0';
-            int y = j < 0 ? 0 : num2.charAt(j) - '0';
-            int sum = (x + y + carry) % 10;
-            builder.append(sum);
-            carry = (x + y + carry) / 10;
-        }
-        return builder.reverse().toString();
-    }
-}
 
 /**
  * LeetCode 9

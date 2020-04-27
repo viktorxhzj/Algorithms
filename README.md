@@ -7,8 +7,9 @@
     - [2.2 Catalan Number](#22-catalan-number)
   - [3 Divide & Conquer](#3-divide--conquer)
   - [4 Bit Operation](#4-bit-operation)
-    - [4.1 XOR](#41-xor)
-    - [4.2 OR](#42-or)
+    - [4.1 Binary-XOR](#41-binary-xor)
+    - [4.2 Binary-OR](#42-binary-or)
+    - [4.3 Decimal-ADD/MUL](#43-decimal-addmul)
   - [5 DFS/BackTracking](#5-dfsbacktracking)
   - [6 BFS](#6-bfs)
 - [Data Structures](#data-structures)
@@ -77,7 +78,7 @@
 
 ### 4 Bit Operation
 
-#### 4.1 XOR
+#### 4.1 Binary-XOR
 
 - [LeetCode 136 - 只出现一次的数字](src/LC136.java)
 
@@ -85,7 +86,7 @@
 
     思路：两个相等的数异或为0。异或所有数字即可得到唯一只出现一次的数字。
 
-#### 4.2 OR
+#### 4.2 Binary-OR
 
 - [LeetCode 137 - 只出现一次的数字II](src/LC137.java)
 
@@ -93,13 +94,19 @@
     
     思路：3个元素的每位的和必定是3的倍数。
 
-#### 4.3 Decimal-ADD
+#### 4.3 Decimal-ADD/MUL
 
 - [LeetCode 2 - 两数相加](src/LC2.java)
 
     给出两个非空的链表用来表示两个非负的整数。其中，它们各自的位数是按照逆序的方式存储的，并且它们的每个节点只能存储一位数字。
     
     思路：十进制位运算。
+
+- [**LeetCode 43 - 字符串相乘**](src/LC43.java)
+
+    给定两个以字符串形式表示的非负整数num1和num2，返回num1和num2的乘积，它们的乘积也表示为字符串形式。
+    
+    思路：十进制乘法位运算，m位数整数*n位数整数的最大位数为m+n
 
 ### 5 DFS/BackTracking
 
