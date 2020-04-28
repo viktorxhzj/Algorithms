@@ -1,38 +1,27 @@
 public class LC33 {
     public int search(int[] nums, int target) {
-        if(nums == null || nums.length == 0){
-            return -1;
-        }
-        int start = 0;
-        int end = nums.length - 1;
+        if (nums == null || nums.length == 0) return -1;
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
 
-        while (start <= end){
-            int mid = start + (end -start)/2;
-            if (nums[mid] == target){
-                return mid;
+            // left <= mid < right
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) return mid;
+
+            // nums[mid]不可能和nums[right]相等
+
+            // [left, mid]递增
+            if (nums[mid] > nums[right]) {
+                if (target >= nums[left] && target < nums[mid]) right = mid - 1;
+                else left = mid + 1;
             }
-
-            //后半部分有序
-            if(nums[mid] < nums[end]){
-                if(nums[mid] < target && target <= nums[end]){
-                    start = mid + 1;
-                } else {
-                    end = mid - 1;
-                }
-
-            } else {
-                if(nums[mid] > target && target >= nums[start]){
-                    end = mid - 1;
-
-                } else {
-                    start = mid + 1;
-
-                }
-
-
+            // [mid, right]递增
+            else {
+                if (target > nums[mid] && target <= nums[right]) left = mid + 1;
+                else right = mid - 1;
             }
         }
-        return -1;
-
+        return nums[left] == target? left: -1;
     }
 }
