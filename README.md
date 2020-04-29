@@ -26,6 +26,7 @@
     - [4 Linked List](#4-linked-list)
       - [4.1 Recursive Method](#41-recursive-method)
       - [4.2 Double Pointers](#42-double-pointers)
+    - [5 Disjointed Set Union](#5-disjointed-set-union)
 
 ## Algorithms
 
