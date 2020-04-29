@@ -1,10 +1,9 @@
-# 小盒子 LeetCode 177/1615
+# 小盒子 LeetCode 184/1615
 
-- [小盒子 LeetCode 177/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-1771615)
+- [小盒子 LeetCode 184/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-1841615)
   - [Algorithms](#algorithms)
     - [1 Binary Search](#1-binary-search)
       - [1.1 Rotated Sorted Array](#11-rotated-sorted-array)
-      - [1.2 Search](#12-search)
     - [2 Dynamic Programming](#2-dynamic-programming)
       - [2.1 Knapsack Problem](#21-knapsack-problem)
       - [2.2 Catalan Number](#22-catalan-number)
@@ -32,6 +31,23 @@
 
 ### 1 Binary Search
 
+- [**LeetCode 35 - 搜索插入位置**](src/LC35.java)
+
+    给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+    你可以假设数组中无重复元素。
+
+- [LeetCode 367 - 有效的完全平方数](src/LC367.java)
+
+    给定一个正整数 num，编写一个函数，如果 num 是一个完全平方数，则返回 True，否则返回 False。
+
+- [LeetCode 704 - 二分查找](src/LC704.java)
+
+    给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+
+- [LeetCode 852 - 山脉数组的峰顶索引](src/LC852.java)
+
+    给定一个确定为山脉的数组，返回唯一一个满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
+
 #### 1.1 Rotated Sorted Array
 
 - [LeetCode 33 - 搜索旋转排序数组](src/LC33.java)
@@ -51,26 +67,11 @@
 
     假设按照升序排序的数组在预先未知的某个点上进行了旋转。请找出数组中的最小元素。本题中含有重复元素。
 
-#### 1.2 Search
-
-- [**LeetCode 35 - 搜索插入位置**](src/LC35.java)
-
-    给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
-    你可以假设数组中无重复元素。
-
-- [LeetCode 367 - 有效的完全平方数](src/LC367.java)
-
-    给定一个正整数 num，编写一个函数，如果 num 是一个完全平方数，则返回 True，否则返回 False。
-
-- [LeetCode 704 - 二分查找](src/LC704.java)
-
-    给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
-
-- [LeetCode 852 - 山脉数组的峰顶索引](src/LC852.java)
-
-    给定一个确定为山脉的数组，返回唯一一个满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
-
 ### 2 Dynamic Programming
+
+- [LeetCode 118  - 杨辉三角](src/LC118.java)
+
+    给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
 
 #### 2.1 Knapsack Problem
 
@@ -355,6 +356,10 @@
 
     思路：滑动窗口+HashSet
 
+- [LeetCode 721 - 账户合并](src/LC721.java)
+
+    思路：哈希表映射+并查集
+
 ### 4 Linked List
 
 #### 4.1 Recursive Method
@@ -381,6 +386,16 @@
     思路：双指针隔开n的距离。
 
 ### 5 Disjointed Set Union
+
+- [LeetCode 547 - 朋友圈](src/LC547.java)
+
+    班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。
+    如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
+    给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。
+    如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。
+    你必须输出所有学生中的已知的朋友圈总数。
+    
+    思路：并查集
 
 - [LeetCode 684 - 冗余连接](src/LC684.java)
 
