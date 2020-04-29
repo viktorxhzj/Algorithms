@@ -1,8 +1,10 @@
-# 小盒子 LeetCode 172/1615
+# 小盒子 LeetCode 177/1615
 
-- [小盒子 LeetCode 172/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-1721615)
+- [小盒子 LeetCode 177/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-1771615)
   - [Algorithms](#algorithms)
     - [1 Binary Search](#1-binary-search)
+      - [1.1 Rotated Sorted Array](#11-rotated-sorted-array)
+      - [1.2 Search](#12-search)
     - [2 Dynamic Programming](#2-dynamic-programming)
       - [2.1 Knapsack Problem](#21-knapsack-problem)
       - [2.2 Catalan Number](#22-catalan-number)
@@ -189,6 +191,16 @@
     
     思路：多源BFS
 
+- [LeetCode 743 - 网络延迟时间](src/LC743.java)
+
+    给定一个列表 times，表示信号经过有向边的传递时间。 
+    times[i] = (u, v, w)，其中 u 是源节点，v 是目标节点， w 是一个信号从源节点传递到目标节点的时间。
+    现在，我们从某个节点 K 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 -1。
+    
+    思路：Dijkstra
+
+
+
 ## Data Structures
 
 ### 1 Binary Tree
@@ -317,6 +329,11 @@
 
     给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
 
+- [LeetCode 130 - 被围绕的区域](src/LC130.java)
+
+    给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
+    找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+
 ### 2 Array
 
 - [LeetCode 6 - Z字形变换](src/LC6.java)
@@ -361,4 +378,18 @@
     给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
     
     思路：双指针隔开n的距离。
+
+### 5 Disjointed Set Union
+
+- [LeetCode 684 - 冗余连接](src/LC684.java)
+
+    在本问题中, 树指的是一个连通且无环的无向图。
+    输入一个图，该图由一个有着N个节点 (节点值不重复1, 2, ..., N) 的树及一条附加的边构成。
+    附加的边的两个顶点包含在1到N中间，这条附加的边不属于树中已存在的边。
+    结果图是一个以边组成的二维数组。每一个边的元素是一对[u, v] ，满足 u < v，表示连接顶点u 和v的无向图的边。
+    返回一条可以删去的边，使得结果图是一个有着N个节点的树。如果有多个答案，则返回二维数组中最后出现的边。
+    答案边 [u, v] 应满足相同的格式 u < v。
+    
+    思路：并查集
+
 
