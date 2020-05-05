@@ -69,9 +69,21 @@
 
 ### 2 Dynamic Programming
 
+#### 2.1 1D-DP
+
 - [LeetCode 118  - 杨辉三角](src/LC118.java)
 
     给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+
+- [LeetCode 118  - 杨辉三角](src/LC118.java)
+
+    给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+    
+#### 2.2 2D-DP
+
+- [**LeetCode 32  - 最长有效括号**](src/LC32.java)
+
+    给定一个只包含 '(' 和 ')' 的字符串，找出最长的包含有效括号的子串的长度。
 
 #### 2.1 Knapsack Problem
 
@@ -115,7 +127,7 @@
     
     思路：3个元素的每位的和必定是3的倍数。
 
-#### 4.3 Decimal-ADD/MUL
+#### 4.3 Decimal-ADD/MUL/DIV
 
 - [LeetCode 2 - 两数相加](src/LC2.java)
 
@@ -126,6 +138,12 @@
 - [**LeetCode 43 - 字符串相乘**](src/LC43.java)
 
     给定两个以字符串形式表示的非负整数num1和num2，返回num1和num2的乘积，它们的乘积也表示为字符串形式。
+    
+    思路：十进制乘法位运算，m位数整数*n位数整数的最大位数为m+n
+
+- [**LeetCode 29 - 两数相除**](src/LC29.java)
+
+    给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
     
     思路：十进制乘法位运算，m位数整数*n位数整数的最大位数为m+n
 
@@ -199,9 +217,7 @@
     times[i] = (u, v, w)，其中 u 是源节点，v 是目标节点， w 是一个信号从源节点传递到目标节点的时间。
     现在，我们从某个节点 K 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 -1。
     
-    思路：Dijkstra
-
-
+    思路：algorithms.Dijkstra
 
 ## Data Structures
 
@@ -347,6 +363,12 @@
     给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
 
     思路：摩尔投票法
+
+- [LeetCode 31 - 下一个排列](src/LC31.java)
+
+    实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
+
+    思路：数学分析
 
 ### 3 Hash Table
 
