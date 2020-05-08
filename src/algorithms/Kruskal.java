@@ -15,7 +15,7 @@ public class Kruskal {
     }
 
     public void runKruskal() {
-        PriorityQueue<Edge> queue = new PriorityQueue<>(edges.length, new Edge());
+        PriorityQueue<Edge> queue = new PriorityQueue<>(edges.length, new Edge()); // 给一个comparator实现类
 
         ArrayList<Edge> mst = new ArrayList<>();
 

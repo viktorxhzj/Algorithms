@@ -17,7 +17,7 @@ public class LC144 {
         if (root == null) return res;
         stack.push(root);
         
-        while(!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
 
             // 打印当前节点
             TreeNode temp = stack.pop();
