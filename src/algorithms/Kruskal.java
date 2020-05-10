@@ -8,6 +8,7 @@ public class Kruskal {
     private int n;
     public Kruskal(int[][] graph, int n) {
         this.n = n;
+        // 生成edges数组
         edges = new Edge[graph.length];
         for (int i = 0; i < graph.length; i++) {
             edges[i] = new Edge(graph[i][0], graph[i][1], graph[i][2]);
@@ -19,18 +20,26 @@ public class Kruskal {
 
         ArrayList<Edge> mst = new ArrayList<>();
 
+        // 建立并查集
         int[] parents = new int[n];
         for (int i = 0; i < n; i++) parents[i] = i;
 
+        // 并查集初始容量为1
         int[] size = new int[n];
         Arrays.fill(size, 1);
 
         for (Edge edge: edges) queue.offer(edge);
+
         while(!queue.isEmpty()) {
             Edge curEdge = queue.poll();
+
+            // 构成环
             if (findParent(curEdge.u, parents) == findParent(curEdge.v, parents)) continue;
+
             mst.add(curEdge);
+
             int node1 = findParent(curEdge.u, parents), node2 = findParent(curEdge.v, parents);
+
             if (size[node1] < size[node2]) {
                 parents[node1] = parents[node2];
                 size[node2] += size[node1];

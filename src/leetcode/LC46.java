@@ -1,21 +1,24 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LC46 {
-    public ArrayList<ArrayList<Integer>> permute(int[] nums) {
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+    List<List<Integer>> list = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
         if (nums.length == 0) return list;
-        ArrayList<Integer> queue = new ArrayList<>();
-        permutation(nums, 0, queue, list);
+        permutation(nums, 0, new ArrayList<Integer>());
         return list;
     }
-    public void permutation(int[] nums, int depth, ArrayList<Integer> queue, ArrayList<ArrayList<Integer>> list) {
-        if (depth == nums.length) list.add(new ArrayList<>(queue));
+    public void permutation(int[] nums, int depth, ArrayList<Integer> queue) {
+        if (depth == nums.length) {
+            list.add(new ArrayList<>(queue));
+            return;
+        }
         for (int k = depth; k < nums.length; k++) {
             swap(nums, k, depth);
             queue.add(nums[depth]);
-            permutation(nums, depth + 1, queue, list);
+            permutation(nums, depth + 1, queue);
             swap(nums, k, depth);
             queue.remove(queue.size() - 1);
         }

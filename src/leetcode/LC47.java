@@ -1,28 +1,32 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class LC47 {
-    public ArrayList<ArrayList<Integer>> permuteUnique(int[] nums) {
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        if (nums.length == 0) return list;
-        ArrayList<Integer> queue = new ArrayList<>();
-        permutation(nums, 0, queue, list);
+    List<List<Integer>> list = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums == null || nums.length == 0) return list;
+        permutation(nums, 0, new ArrayList<Integer>());
         return list;
     }
-    public void permutation(int[] nums, int depth, ArrayList<Integer> queue, ArrayList<ArrayList<Integer>> list) {
-        if (depth == nums.length) list.add(new ArrayList<>(queue));
-        outer: for (int k = depth; k < nums.length; k++) {
-            for (int j = depth; j < k; j++) {
-                // 如果和当前层之前节点值相等，跳过
-                if (nums[k] == nums[j]) continue outer;
-            }
+    public void permutation(int[] nums, int depth, ArrayList<Integer> queue) {
+        if (depth == nums.length) {
+            list.add(new ArrayList<>(queue));
+            return;
+        }
+
+        // 交换会破坏顺序，所以排序后用nums[k] == nums[k - 1]判断同层重复是不充分的
+        HashSet<Integer> set = new HashSet<>();
+        for (int k = depth; k < nums.length; k++) {
+            if (set.contains(nums[k])) continue;
+            set.add(nums[k]);
             swap(nums, k, depth);
             queue.add(nums[depth]);
-            permutation(nums, depth + 1, queue, list);
+            permutation(nums, depth + 1, queue);
             swap(nums, k, depth);
             queue.remove(queue.size() - 1);
-            StringBuilder bd = new StringBuilder();
         }
     }
 
@@ -30,5 +34,11 @@ public class LC47 {
         int temp = nums[p];
         nums[p] = nums[q];
         nums[q] = temp;
+    }
+
+    public static void main(String[] args) {
+        LC47 algo = new LC47();
+        int[] arr = new int[]{2, 2, 1, 1};
+        List<List<Integer>> res = algo.permuteUnique(arr);
     }
 }
