@@ -1,21 +1,27 @@
-# 小盒子 LeetCode 184/1615
+# 小盒子 LeetCode 204/1615
 
-- [小盒子 LeetCode 184/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-1841615)
+- [小盒子 LeetCode 204/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-2041615)
   - [Algorithms](#algorithms)
     - [1 Binary Search](#1-binary-search)
       - [1.1 Rotated Sorted Array](#11-rotated-sorted-array)
     - [2 Dynamic Programming](#2-dynamic-programming)
       - [2.1 1D-DP](#21-1d-dp)
       - [2.2 2D-DP](#22-2d-dp)
-      - [2.1 Knapsack Problem](#21-knapsack-problem)
-      - [2.2 Catalan Number](#22-catalan-number)
+      - [2.3 KMP](#23-kmp)
+      - [2.4 Knapsack Problem](#24-knapsack-problem)
+      - [2.5 Catalan Number](#25-catalan-number)
     - [3 Divide & Conquer](#3-divide--conquer)
     - [4 Bit Operation](#4-bit-operation)
-      - [4.1 Binary-XOR](#41-binary-xor)
-      - [4.2 Binary-OR](#42-binary-or)
-      - [4.3 Decimal-ADD/MUL/DIV](#43-decimal-addmuldiv)
-    - [5 DFS/BackTracking](#5-dfsbacktracking)
-    - [6 BFS](#6-bfs)
+      - [4.1 Bit-XOR/OR/AND](#41-bit-xororand)
+      - [4.3 Binary-ADD/MUL/DIV](#43-binary-addmuldiv)
+      - [4.4 Decimal-ADD/MUL/DIV](#44-decimal-addmuldiv)
+    - [5 DFS/BFS](#5-dfsbfs)
+      - [5.1 DFS](#51-dfs)
+      - [5.2 BackTracking](#52-backtracking)
+        - [5.2.1 Combination](#521-combination)
+        - [5.2.2 Permutation](#522-permutation)
+      - [5.3 BFS](#53-bfs)
+        - [5.3.1 Dijkstra](#531-dijkstra)
   - [Data Structures](#data-structures)
     - [1 Binary Tree](#1-binary-tree)
       - [1.1 Iterative Method](#11-iterative-method)
@@ -28,6 +34,7 @@
       - [4.1 Recursive Method](#41-recursive-method)
       - [4.2 Double Pointers](#42-double-pointers)
     - [5 Disjointed Set Union](#5-disjointed-set-union)
+    - [6 Stack](#6-stack)
 
 ## Algorithms
 
@@ -116,6 +123,18 @@
 
 #### 2.4 Knapsack Problem
 
+- [**LeetCode 377  - 组合总和IV**](src/leetcode/LC377.java)
+
+    给定一个由正整数组成且不存在重复数字的数组，找出和为给定目标正整数的组合的个数。
+    
+    思路：经典0-1背包问题，但顺序不同的序列被认为不同的组合。
+    
+- [**LeetCode 518  - 零钱兑换II**](src/leetcode/LC518.java)
+
+    给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。 
+    
+    思路：经典0-1背包问题。重点：把二维数组优化成一维数组。
+
 - [**LeetCode 面试题08.11 - 硬币**](src/leetcode/LCInterview0811.java)
 
     给定数量不限的硬币，币值为25分、10分、5分和1分，编写代码计算n分有几种表示法。
@@ -145,7 +164,7 @@
 
 ### 4 Bit Operation
 
-#### 4.1 Binary-XOR
+#### 4.1 Bit-XOR/OR/AND
 
 - [LeetCode 136 - 只出现一次的数字](src/leetcode/LC136.java)
 
@@ -153,15 +172,36 @@
 
     思路：两个相等的数异或为0。异或所有数字即可得到唯一只出现一次的数字。
 
-#### 4.2 Binary-OR
-
-- [LeetCode 137 - 只出现一次的数字II](src/leetcode/LC137.java)
+- [**LeetCode 137 - 只出现一次的数字II**](src/leetcode/LC137.java)
 
     给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。
     
     思路：3个元素的每位的和必定是3的倍数。
 
-#### 4.3 Decimal-ADD/MUL/DIV
+- [LeetCode 231 - 2的幂](src/leetcode/LC231.java)
+
+    给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
+    
+    思路：2的幂次方数最高位二进制最高位为1，其余皆为0。2的幂次方数-1的最高位为0，其余皆为1。
+
+- [**LeetCode 260 - 只出现一次的数字III**](src/leetcode/LC260.java)
+
+    给定一个整数数组，其中恰好有两个元素只出现一次，其余所有元素均出现两次。 找出只出现一次的那两个元素。
+    
+    思路：异或所以数字即可得到两个元素只出现一次的元素的异或结果。
+    找到异或结果的为1的位，即两个数在这个位上不同。
+    遍历每个数字，将这个位上为1的分成一组，为0的分成另外一组，则两个只出现一次的元素必定在两个组里。
+    对两个组异或的结果就是要找的元素。
+
+#### 4.3 Binary-ADD/MUL/DIV
+
+- [**LeetCode 50 - Pow(x, n)**](src/leetcode/LC50.java)
+
+    实现 pow(x, n) ，即计算 x 的 n 次幂函数。
+    
+    思路：快速幂，即幂可以由二进制的形式表示。
+
+#### 4.4 Decimal-ADD/MUL/DIV
 
 - [LeetCode 2 - 两数相加](src/leetcode/LC2.java)
 
@@ -197,7 +237,7 @@
 
     给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
     
-    思路：十进制乘法位运算，m位数整数*n位数整数的最大位数为m+n
+    思路：太难了，现在再看又不会了
 
 ### 5 DFS/BFS
 
@@ -219,18 +259,36 @@
     给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
     
     思路：纯DFS，也可以用纯BFS
+    
+- [LeetCode 695 - 岛屿的最大面积](src/leetcode/LC695.java)
+
+    找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为 0。）
+    
+    思路：纯DFS
+    
+- [LeetCode 207 - 课程表](src/leetcode/LC207.java)
+
+    你这个学期必须选修 numCourse 门课程，记为 0 到 numCourse-1 。
+    在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们：[0,1]
+    给定课程总量以及它们的先决条件，请你判断是否可能完成所有课程的学习？
+    
+    思路：判断有向图是否有环。DFS如果有back edge即为有环
+
+- [LeetCode 210 - 课程表II](src/leetcode/LC210.java)
+
+    给定课程总量以及它们的先决条件，返回你为了学完所有课程所安排的学习顺序。
 
 #### 5.2 BackTracking
-
-- [LeetCode 17 - 电话号码的数字组合](src/leetcode/LC17.java)
-
-    给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
-    
-    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。
 
 - [LeetCode 22 - 括号生成](src/leetcode/LC22.java)
 
     数字n代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且有效的括号组合。
+
+##### 5.2.1 Combination
+
+- [LeetCode 77 - 组合](src/leetcode/LC77.java)
+
+    给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
 
 - [LeetCode 39 - 组合总和](src/leetcode/LC39.java)
 
@@ -242,17 +300,9 @@
     给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
     candidates 中的每个数字在每个组合中只能使用一次。
 
-- [LeetCode 46 - 全排列](src/leetcode/LC46.java)
+- [LeetCode 216 - 组合总和III](src/leetcode/LC216.java)
 
-    给定一个没有重复数字的序列，返回所有不重复的全排列。
-
-    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。
-
-- [**LeetCode 47 - 全排列II**](src/leetcode/LC47.java)
-
-    给定一个可包含重复数字的序列，返回其所有可能的全排列。
-
-    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。判断是否和同层的节点值相同从而剪枝
+    找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
 
 - [LeetCode 78 - 子集](src/leetcode/LC78.java)
 
@@ -267,6 +317,26 @@
     思路：对于任意一个整数，第一次遍历到这个整数时可以选择添加或者不添加。
     当不是第一次遍历到这个整数时，如果子集里没有这个整数，还是可以选择添加或者不添加。
     但是如果子集里已经有这个整数了，那就必须添加这个整数，不然会造成重复。
+
+##### 5.2.2 Permutation
+
+- [LeetCode 17 - 电话号码的数字组合](src/leetcode/LC17.java)
+
+    给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+    
+    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。
+
+- [LeetCode 46 - 全排列](src/leetcode/LC46.java)
+
+    给定一个没有重复数字的序列，返回所有不重复的全排列。
+
+    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。
+
+- [**LeetCode 47 - 全排列II**](src/leetcode/LC47.java)
+
+    给定一个可包含重复数字的序列，返回其所有可能的全排列。
+
+    思路：全排列使用回溯算法。同层的使用交换来实现状态回溯。判断是否和同层的节点值相同从而剪枝
 
 - [LeetCode 面试题08.08 - 有重复字符串的排列组合](src/leetcode/LCInterview0808.java)
 
@@ -446,10 +516,6 @@
 
     思路：滑动窗口+HashSet
 
-- [LeetCode 721 - 账户合并](src/leetcode/LC721.java)
-
-    思路：哈希表映射+并查集
-
 ### 4 Linked List
 
 #### 4.1 Recursive Method
@@ -497,5 +563,15 @@
     答案边 [u, v] 应满足相同的格式 u < v。
     
     思路：并查集
+
+- [**LeetCode 721 - 账户合并**](src/leetcode/LC721.java)
+
+    思路：哈希表映射+并查集
+
+### 6 Stack
+
+- [LeetCode 20 - 有效的括号](src/leetcode/LC20.java)
+
+    给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 
 

@@ -4,6 +4,7 @@ public class KMP {
 
     public int[] produceNext(char[] arr) {
         int[] next = new int[arr.length];
+
         int i = 0, j = 1;
 
         while (j < arr.length) {
@@ -19,6 +20,7 @@ public class KMP {
                 j++;
             }
         }
+
         return next;
     }
 
