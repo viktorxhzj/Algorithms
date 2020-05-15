@@ -1,4 +1,4 @@
-# 小盒子 LeetCode 204/1615
+# 小盒子 LeetCode 209/1615
 
 - [小盒子 LeetCode 204/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-2041615)
   - [Algorithms](#algorithms)
@@ -236,8 +236,6 @@
 - [**LeetCode 29 - 两数相除**](src/leetcode/LC29.java)
 
     给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
-    
-    思路：太难了，现在再看又不会了
 
 ### 5 DFS/BFS
 
@@ -495,6 +493,10 @@
 - [LeetCode 6 - Z字形变换](src/leetcode/LC6.java)
 
     将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+    
+- [LeetCode 38 - 外观数列](src/leetcode/LC38.java)
+
+    「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
 
 - [LeetCode 169 - 多数元素](src/leetcode/LC169.java)
 
@@ -510,11 +512,27 @@
 
 ### 3 Hash Table
 
+- [LeetCode 12 - 整数转罗马数字](src/leetcode/LC12.java)
+
+- [LeetCode 36 - 有效的数独](src/leetcode/LC36.java)
+
+    判断一个 9x9 的数独是否有效。
+    
+    思路：使用数组取代哈希表
+
+- [LeetCode 49 - 字母异位词分组](src/leetcode/LC49.java)
+
+    给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+
 - [LeetCode 187 - 重复的DNA序列](src/leetcode/LC187.java)
 
     编写一个函数来查找 DNA 分子中所有出现超过一次的 10 个字母长的序列（子串）。
 
     思路：滑动窗口+HashSet
+    
+- [LeetCode 560 - 和为K的子数组](src/leetcode/LC560.java)
+
+    给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
 
 ### 4 Linked List
 
@@ -574,4 +592,22 @@
 
     给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 
+- [LeetCode 155 - 最小栈](src/leetcode/LC155.java)
 
+    设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+
+### 7 Dictionary Tree
+
+- [LeetCode 208 - 实现Trie](src/leetcode/LC208.java)
+
+    实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
+
+### 8 Matrix
+
+- [LeetCode 48 - 旋转图像](src/leetcode/LC48.java)
+
+    给定一个 n × n 的二维矩阵表示一个图像。将图像顺时针旋转 90 度。
+
+## Solutions that I failed to understand
+
+29, 560
