@@ -1,9 +1,12 @@
-# 小盒子 LeetCode 209/1615
+# 小盒子 LeetCode 215/1615
 
-- [小盒子 LeetCode 204/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-2041615)
+- [小盒子 LeetCode 215/1615](#%e5%b0%8f%e7%9b%92%e5%ad%90-leetcode-2151615)
   - [Algorithms](#algorithms)
     - [1 Binary Search](#1-binary-search)
-      - [1.1 Rotated Sorted Array](#11-rotated-sorted-array)
+      - [1.1 Reduce Interval](#11-reduce-interval)
+      - [1.2 Find Left Boundary](#12-find-left-boundary)
+      - [1.3 Find Right Boundary](#13-find-right-boundary)
+      - [1.4 Rotated Sorted Array](#14-rotated-sorted-array)
     - [2 Dynamic Programming](#2-dynamic-programming)
       - [2.1 1D-DP](#21-1d-dp)
       - [2.2 2D-DP](#22-2d-dp)
@@ -35,19 +38,20 @@
       - [4.2 Double Pointers](#42-double-pointers)
     - [5 Disjointed Set Union](#5-disjointed-set-union)
     - [6 Stack](#6-stack)
+    - [7 Dictionary Tree](#7-dictionary-tree)
+    - [8 Matrix](#8-matrix)
+  - [Solutions that I failed to understand](#solutions-that-i-failed-to-understand)
 
 ## Algorithms
 
 ### 1 Binary Search
 
+#### 1.1 Reduce Interval
+
 - [**LeetCode 35 - 搜索插入位置**](src/leetcode/LC35.java)
 
     给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
     你可以假设数组中无重复元素。
-    
-- [**LeetCode 34 - 在排序数组中查找元素的第一个和最后一个位置**](src/leetcode/LC34.java)
-
-    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
  
 - [LeetCode 69 - x的平方根](src/leetcode/LC69.java)
 
@@ -62,7 +66,6 @@
     给定一个排序好的数组，两个整数 k 和 x，从数组中找到最靠近 x（两数之差最小）的 k 个数。
     返回的结果必须要是按升序排好的。如果有两个数与 x 的差值一样，优先选择数值较小的那个数。
 
-
 - [LeetCode 704 - 二分查找](src/leetcode/LC704.java)
 
     给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
@@ -71,7 +74,19 @@
 
     给定一个确定为山脉的数组，返回唯一一个满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
 
-#### 1.1 Rotated Sorted Array
+#### 1.2 Find Left Boundary
+
+- [**LeetCode 34 - 在排序数组中查找元素的第一个和最后一个位置**](src/leetcode/LC34.java)
+
+    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+
+- [LeetCode 278 - 第一个错误的版本](src/leetcode/LC278.java)
+
+#### 1.3 Find Right Boundary
+
+- [LeetCode 744 - 寻找比目标字母大的最小字母](src/leetcode/LC744.java)
+
+#### 1.4 Rotated Sorted Array
 
 - [LeetCode 33 - 搜索旋转排序数组](src/leetcode/LC33.java)
 
@@ -514,6 +529,8 @@
 
 - [LeetCode 12 - 整数转罗马数字](src/leetcode/LC12.java)
 
+    思路：使用数组代替哈希表
+
 - [LeetCode 36 - 有效的数独](src/leetcode/LC36.java)
 
     判断一个 9x9 的数独是否有效。
@@ -524,6 +541,8 @@
 
     给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
 
+    思路：序列化字母出现次数并哈希
+
 - [LeetCode 187 - 重复的DNA序列](src/leetcode/LC187.java)
 
     编写一个函数来查找 DNA 分子中所有出现超过一次的 10 个字母长的序列（子串）。
@@ -533,6 +552,8 @@
 - [LeetCode 560 - 和为K的子数组](src/leetcode/LC560.java)
 
     给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+
+    思路：前缀和，DP+哈希表
 
 ### 4 Linked List
 
