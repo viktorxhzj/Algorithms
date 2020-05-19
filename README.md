@@ -375,6 +375,14 @@
     
     思路：Dijkstra
 
+### 6 Greedy Algorithm
+
+- [LeetCode 55 - 跳跃游戏](src/leetcode/LC55.java)
+
+    给定一个非负整数数组，你最初位于数组的第一个位置。
+    数组中的每个元素代表你在该位置可以跳跃的最大长度。
+    判断你是否能够到达最后一个位置。
+
 ## Data Structures
 
 ### 1 Binary Tree
@@ -525,6 +533,12 @@
 
     思路：数学分析
 
+- [LeetCode 56 - 合并区间](src/leetcode/LC56.java)
+
+    给出一个区间的集合，请合并所有重叠的区间。
+    
+    思路：排序 + 双指针
+
 ### 3 Hash Table
 
 - [LeetCode 12 - 整数转罗马数字](src/leetcode/LC12.java)
@@ -574,6 +588,11 @@
 
 #### 4.2 Double Pointers
 
+- [LeetCode 328 - 奇偶链表](src/leetcode/LC328.java)
+
+    给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。
+    请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
+
 - [LeetCode 19 - 删除链表的倒数第N个节点](src/leetcode/LC19.java)
 
     给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
@@ -617,6 +636,11 @@
 
     设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
 
+- [LeetCode 394 - 字符串解码](src/leetcode/LC394.java)
+
+    给定一个经过编码的字符串，返回它解码后的字符串。
+    编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
 ### 7 Dictionary Tree
 
 - [LeetCode 208 - 实现Trie](src/leetcode/LC208.java)
@@ -629,6 +653,18 @@
 
     给定一个 n × n 的二维矩阵表示一个图像。将图像顺时针旋转 90 度。
 
+- [LeetCode 54 - 螺旋矩阵](src/leetcode/LC54.java)
+
+    给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
+ 
+- [LeetCode 59 - 螺旋矩阵II](src/leetcode/LC59.java)
+
+    给定一个正整数 n，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
+
+- [LeetCode 73 - 矩阵置零](src/leetcode/LC73.java)
+
+    给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
+
 ## Solutions that I failed to understand
 
-29, 560
+29, 560, 95
