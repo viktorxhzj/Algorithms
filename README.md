@@ -142,13 +142,13 @@
 
     给定一个由正整数组成且不存在重复数字的数组，找出和为给定目标正整数的组合的个数。
     
-    思路：经典0-1背包问题，但顺序不同的序列被认为不同的组合。
+    思路：完全背包问题，但顺序不同的序列被认为不同的组合。
     
 - [**LeetCode 518  - 零钱兑换II**](src/leetcode/LC518.java)
 
     给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。 
     
-    思路：经典0-1背包问题。重点：把二维数组优化成一维数组。
+    思路：0-1背包问题。重点：把二维数组优化成一维数组。
 
 - [**LeetCode 面试题08.11 - 硬币**](src/leetcode/LCInterview0811.java)
 
@@ -533,6 +533,26 @@
 
     思路：数学分析
 
+#### 2.1 Double Pointers
+
+- [LeetCode 26 - 删除排序数组中的重复项](src/leetcode/LC26.java)
+
+    给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+    
+    思路：循环不变式！
+
+- [LeetCode 27 - 移除元素](src/leetcode/LC27.java)
+
+    给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
+    
+    思路：循环不变式！
+
+- [LeetCode 80 - 删除排序数组中的重复项II](src/leetcode/LC80.java)
+
+    给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。
+    
+    思路：循环不变式！
+
 - [LeetCode 56 - 合并区间](src/leetcode/LC56.java)
 
     给出一个区间的集合，请合并所有重叠的区间。
@@ -578,6 +598,18 @@
     给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
 
     思路：递归的交换两个节点以后的节点，返回当前两个节点的后一个节点。
+
+- [LeetCode 82 - 删除排序链表中的重复元素II](src/leetcode/LC82.java)
+
+    给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 没有重复出现 的数字。
+
+    思路：就递归呗。
+
+- [LeetCode 206 - 反转链表](src/leetcode/LC206.java)
+
+    反转一个单链表。
+
+    思路：就递归呗。
 
 - [**LeetCode 445 - 两数相加II**](src/leetcode/LC445.java)
 
@@ -628,18 +660,42 @@
 
 ### 6 Stack
 
+- [LeetCode 71 - 简化路径](src/leetcode/LC71.java)
+
+    以 Unix 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。
+
+- [LeetCode 173 - 二叉搜索树迭代器](src/leetcode/LC173.java)
+
+    实现一个二叉搜索树迭代器。你将使用二叉搜索树的根节点初始化迭代器。
+
+- [LeetCode 232 - 用栈实现队列](src/leetcode/LC232.java)
+
+    实现一个二叉搜索树迭代器。你将使用二叉搜索树的根节点初始化迭代器。
+
+#### 6.1 Matching Problems
+
 - [LeetCode 20 - 有效的括号](src/leetcode/LC20.java)
 
     给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+- [LeetCode 150 - 逆波兰表达式求值](src/leetcode/LC150.java)
+
+    根据逆波兰表示法，求表达式的值。
+
+- [**LeetCode 394 - 字符串解码**](src/leetcode/LC394.java)
+
+    给定一个经过编码的字符串，返回它解码后的字符串。
+    编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+#### 6.2 Monotonic Stack
 
 - [LeetCode 155 - 最小栈](src/leetcode/LC155.java)
 
     设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
 
-- [LeetCode 394 - 字符串解码](src/leetcode/LC394.java)
+- [LeetCode 901 - 股票价格跨度](src/leetcode/LC901.java)
 
-    给定一个经过编码的字符串，返回它解码后的字符串。
-    编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+    编写一个 StockSpanner 类，它收集某些股票的每日报价，并返回该股票当日价格的跨度。
 
 ### 7 Dictionary Tree
 
@@ -668,3 +724,11 @@
 ## Solutions that I failed to understand
 
 29, 560, 95
+
+## Problems that I need to review
+
+56
+
+## Algorithms that I need to keep in mind
+
+KMP, QuickSort
