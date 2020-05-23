@@ -31,19 +31,24 @@ public class LC82 {
             }
         }
         nxt.next = pre;
-
         return res.next;
     }
+}
 
-    public static void main(String[] args) {
-        LC82 algo = new LC82();
-//        [1,2,3,3,4,4,5]
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(1);
-        head.next.next = new ListNode(1);
-        head.next.next.next = new ListNode(2);
-        head.next.next.next.next = new ListNode(3);
-        ListNode res = algo.deleteDuplicates(head);
-        System.out.println(".");
+class LC82II {
+    public ListNode deleteDuplicates(ListNode node) {
+        if (node == null || node.next == null) return node;
+
+        ListNode oriNext = node.next;
+        ListNode corNext = deleteDuplicates(node.next);
+        if (node.val == oriNext.val) {
+            if (corNext == null) return null;
+            else if (node.val == corNext.val) return corNext.next;
+            else return corNext;
+        }
+        else {
+            node.next = corNext;
+            return node;
+        }
     }
 }

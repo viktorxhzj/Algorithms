@@ -58,6 +58,25 @@ public class Kruskal {
         return parents[u];
     }
 
+    static class Edge implements Comparator<Edge> {
+        public int u;
+        public int v;
+        public int weight;
+
+        public Edge() {}
+
+        public Edge(int u, int v, int weight) {
+            this.u = u;
+            this.v = v;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compare(Edge o1, Edge o2) {
+            return o1.weight - o2.weight;
+        }
+    }
+
     public static void main(String[] args) {
         int[][] graph = {
                 {1, 2, 4},
@@ -79,21 +98,4 @@ public class Kruskal {
     }
 }
 
-class Edge implements Comparator<Edge> {
-    public int u;
-    public int v;
-    public int weight;
 
-    public Edge() {}
-
-    public Edge(int u, int v, int weight) {
-        this.u = u;
-        this.v = v;
-        this.weight = weight;
-    }
-
-    @Override
-    public int compare(Edge o1, Edge o2) {
-        return o1.weight - o2.weight;
-    }
-}

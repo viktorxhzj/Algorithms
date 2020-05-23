@@ -38,10 +38,4 @@ public class KMP {
         }
         return -1;
     }
-
-    public static void main(String[] args) {
-        KMP kmp = new KMP();
-        String str = "agctagcagctagctg";
-        System.out.println(kmp.kmpSearch(kmp.produceNext(str.toCharArray()), str.toCharArray(), "tagct".toCharArray()));
-    }
 }
