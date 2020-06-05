@@ -44,74 +44,11 @@
 
 ## Algorithms
 
-### 1 Binary Search
-
-#### 1.1 Reduce Interval
-
-- [**LeetCode 35 - 搜索插入位置**](src/leetcode/LC35.java)
-
-    给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
-    你可以假设数组中无重复元素。
- 
-- [LeetCode 69 - x的平方根](src/leetcode/LC69.java)
-
-    实现 int sqrt(int x) 函数。
-
-- [LeetCode 367 - 有效的完全平方数](src/leetcode/LC367.java)
-
-    给定一个正整数 num，编写一个函数，如果 num 是一个完全平方数，则返回 True，否则返回 False。
-
-- [LeetCode 658 - x的平方根](src/leetcode/LC658.java)
-
-    给定一个排序好的数组，两个整数 k 和 x，从数组中找到最靠近 x（两数之差最小）的 k 个数。
-    返回的结果必须要是按升序排好的。如果有两个数与 x 的差值一样，优先选择数值较小的那个数。
-
-- [LeetCode 704 - 二分查找](src/leetcode/LC704.java)
-
-    给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
-
-- [LeetCode 852 - 山脉数组的峰顶索引](src/leetcode/LC852.java)
-
-    给定一个确定为山脉的数组，返回唯一一个满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
-
-#### 1.2 Find Left Boundary
-
-- [**LeetCode 34 - 在排序数组中查找元素的第一个和最后一个位置**](src/leetcode/LC34.java)
-
-    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
-
-- [LeetCode 278 - 第一个错误的版本](src/leetcode/LC278.java)
-
-#### 1.3 Find Right Boundary
-
-- [LeetCode 744 - 寻找比目标字母大的最小字母](src/leetcode/LC744.java)
-
-#### 1.4 Rotated Sorted Array
-
-- [LeetCode 33 - 搜索旋转排序数组](src/leetcode/LC33.java)
-
-    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
-    搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回-1。
-
-- [**LeetCode 81 - 搜索旋转排序数组II**](src/leetcode/LC81.java)
-
-    假设按照升序排序的数组在预先未知的某个点上进行了旋转。本题中含有重复元素。
-    
-- [LeetCode 153 - 寻转旋转排序数组中的最小值](src/leetcode/LC153.java)
-
-    假设按照升序排序的数组在预先未知的某个点上进行了旋转。请找出数组中的最小元素。
-
-- [**LeetCode 154 - 寻转旋转排序数组中的最小值II**](src/leetcode/LC154.java)
-
-    假设按照升序排序的数组在预先未知的某个点上进行了旋转。请找出数组中的最小元素。本题中含有重复元素。
+### 1 [Binary Search](src/topics/BinarySearch.md)
 
 ### 2 Dynamic Programming
 
 #### 2.1 1D-DP
-
-- [LeetCode 118  - 杨辉三角](src/leetcode/LC118.java)
-
-    给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
 
 - [**LeetCode 32  - 最长有效括号**](src/leetcode/LC32.java)
 
@@ -163,11 +100,7 @@
 
 #### 2.5 Catalan Number
 
-- [**LeetCode 96 - 不同的二叉搜索树**](src/leetcode/LC96.java)
 
-    给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种？
-
-    思路：G[n] = G[0] * G[n - 1] + G[1] * G[n - 2] + ... + G[n - 1] * G[0]
 
 ### 3 Divide & Conquer
 

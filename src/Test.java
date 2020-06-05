@@ -1,5 +1,4 @@
-public class Test {
-    public static void main(String[] args) {
+import datastructure.ListNode;
 
-    }
-}
+import java.util.*;
+import java.util.function.*;

@@ -1,22 +1,15 @@
 package leetcode;
 
+//左右都是闭区间，则L=R时的元素必定是所找元素所应该在的位置。
 public class LC704 {
-    public int search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        while (left < right) {
-            int mid = (left + right) / 2;
-
-            // target在[left, mid - 1]
-            if (target < nums[mid]) right = mid - 1;
-
-            // target在[mid + 1, right]
-            if (target > nums[mid]) left = mid + 1;
-
-            // target在[mid]
-            else return mid;
+    public int search(int[] arr, int T) {
+        int L = 0, R = arr.length - 1;
+        while (L < R) {
+            int M = (L + R) >> 1;
+            if (arr[M] == T) return M;
+            if (arr[M] > T) R = M - 1;
+            if (arr[M] < T) L = M + 1;
         }
-
-        // 此时 left == right, 如果存在target则必然为这个元素。
-        return nums[left] == target? left: -1;
+        return arr[L] == T? L: -1;
     }
 }

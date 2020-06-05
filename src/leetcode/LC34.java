@@ -1,72 +1,28 @@
 package leetcode;
 
+// 先找左边界，如果找不到目标元素直接返回。再找右边界。
 public class LC34 {
-    public int[] searchRange(int[] nums, int target) {
-        if (nums == null || nums.length == 0) return new int[]{-1, -1};
-
-        int[] res = new int[2];
-
-        // 寻找左边界
-        // [l, r)
-        int l = 0, r = nums.length;
-        while (l < r) {
-            int m = l + (r - l) / 2;
-
-            // [l...t...r)
-            // [l...m...r)
-            // [l...r)
-            if (nums[m] == target) {
-                r = m;
-            }
-
-            // [l......t..r)
-            // [l....m....r)
-            //       [l...r)
-            if (nums[m] < target) {
-                l = m + 1;
-            }
-
-            // [l..t......r)
-            // [l....m....r)
-            // [l....r)
-            if (nums[m] > target) {
-                r = m;
-            }
+    public int[] searchRange(int[] arr, int T) {
+        int[] res = {-1, -1};
+        int L = 0, R = arr.length;
+        while (L < R) {
+            int M = L + ((R - L) >> 1);
+            if (arr[M] == T) R = M;
+            if (arr[M] > T) R = M;
+            if (arr[M] < T) L = M + 1;
         }
-        if (l == nums.length) res[0] = -1;
-        else res[0] = nums[l] == target? l: -1;
+        if (L == arr.length || arr[L] != T) return res;
+        res[0] = L;
 
-        // 寻找右边界
-        // [l, r)
-        l = 0;
-        r = nums.length;
-        while (l < r) {
-            int m = l + (r - l) / 2;
-
-            // [l...t...r)
-            // [l...m...r)
-            //      [l...r)
-            if (nums[m] == target) {
-                l = m + 1;
-            }
-
-            // [l......t..r)
-            // [l....m....r)
-            //       [l...r)
-            if (nums[m] < target) {
-                l = m + 1;
-            }
-
-            // [l..t......r)
-            // [l....m....r)
-            // [l....r)
-            if (nums[m] > target) {
-                r = m;
-            }
+        L = 0;
+        R = arr.length;
+        while (L < R) {
+            int M = L + ((R - L) >> 1);
+            if (arr[M] == T) L = M + 1;
+            if (arr[M] > T) R = M;
+            if (arr[M] < T) L = M + 1;
         }
-        if (l == 0) res[1] = -1;
-        else res[1] = nums[l - 1] == target ? (l - 1): -1;
-
+        res[1] = L - 1;
         return res;
     }
 }

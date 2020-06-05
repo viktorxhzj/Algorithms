@@ -1,15 +1,16 @@
 package leetcode;
 
 public class LC744 {
-    public char nextGreatestLetter(char[] letters, char target) {
-        if (target < letters[0] || target >= letters[letters.length - 1]) return letters[0];
-        int left = 0, right = letters.length;
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (letters[mid] == target) left = mid + 1;
-            else if (letters[mid] < target) left = mid + 1;
-            else if (letters[mid] > target) right = mid;
+    public char nextGreatestLetter(char[] arr, char T) {
+        int L = 0, R = arr.length;
+
+        while (L < R) {
+            int M = (L + R) >> 1;
+            if (arr[M] == T) L = M + 1;
+            if (arr[M] < T) L = M + 1;
+            if (arr[M] > T) R = M;
         }
-        return letters[left] == target? letters[++left]: letters[left];
+
+        return L == arr.length? arr[0]: arr[L];
     }
 }

@@ -1,5 +1,6 @@
 package leetcode;
 
+// 要注意平方越界的问题，不能用乘积。
 public class LC69 {
     public int mySqrt(int x) {
         if (x == 1 || x == 2 || x == 3) return 1;

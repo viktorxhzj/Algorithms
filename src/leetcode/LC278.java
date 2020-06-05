@@ -1,5 +1,6 @@
 package leetcode;
 
+// 逼近一边的边界，因为是必定存在。
 public class LC278 {
     public int firstBadVersion(int n) {
         int left = 1, right = n;
