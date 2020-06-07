@@ -8,34 +8,40 @@ import java.util.Map;
 public class LC30 {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> res = new ArrayList<>();
-        if (s == null || words == null || s.length() == 0 || words.length == 0 || s.length() < words.length) return res;
-        Map<String, Integer> map = new HashMap<>();
-        for (String word: words) {
-            map.put(word, map.getOrDefault(word, 0) + 1);
-        }
+        if (s == null || s.length() == 0 || words == null || words.length == 0) return res;
+
+        /* word-# */
+        HashMap<String, Integer> map = new HashMap<>();
         int wordLen = words[0].length();
         int wordNum = words.length;
-        int strLen = s.length();
+        for (String word : words) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
         for (int i = 0; i < wordLen; i++) {
-            int j = i;
-            outer: while (j + wordNum * wordLen - 1 < strLen) {
-                Map<String, Integer> reg = new HashMap<>();
-                Map<String, Integer> pos = new HashMap<>();
-                for (int k = j, time = 0; time < wordNum; k = k + wordLen, time++) {
-                    String tmp = s.substring(k, k + wordLen);
-                    if (!map.containsKey(tmp)) {
-                        j = k + wordLen;
-                        continue outer;
+            /*
+            left    左边界
+            right   右边界
+             */
+            int left = i, right = i, count = 0;
+            HashMap<String, Integer> tempMap = new HashMap<>();
+            while (right + wordLen <= s.length()) {
+                String w = s.substring(right, right + wordLen);
+                right += wordLen;
+                if (!map.containsKey(w)) {
+                    count = 0;
+                    left = right;
+                    tempMap.clear();
+                } else {
+                    tempMap.put(w, tempMap.getOrDefault(w, 0) + 1);
+                    count++;
+                    while (tempMap.getOrDefault(w, 0) > map.getOrDefault(w, 0)) {
+                        String t_w = s.substring(left, left + wordLen);
+                        count--;
+                        tempMap.put(t_w, tempMap.getOrDefault(t_w, 0) - 1);
+                        left += wordLen;
                     }
-                    pos.put(tmp, pos.getOrDefault(tmp, k));
-                    reg.put(tmp, reg.getOrDefault(tmp, 0) + 1);
-                    if (reg.get(tmp) > map.get(tmp)) {
-                        j = pos.get(tmp) + wordLen;
-                        continue outer;
-                    }
+                    if (count == wordNum) res.add(left);
                 }
-                res.add(j);
-                j = j + wordLen;
             }
         }
         return res;
