@@ -11,7 +11,7 @@ public class LC79 {
         return false;
     }
 
-    public boolean hasPath(char[][] board, int i, int j, int curPos, char[] word) {
+    private boolean hasPath(char[][] board, int i, int j, int curPos, char[] word) {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != word[curPos]) return false;
         if (curPos == word.length - 1) return true;
         char temp = board[i][j];

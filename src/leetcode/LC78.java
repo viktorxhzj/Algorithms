@@ -1,25 +1,29 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LC78 {
-    ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> subsets(int[] nums) {
-        backTrack(nums, 0, new ArrayList<>());
-        return list;
+    private List<List<Integer>> ans = new ArrayList<>();
+
+    public List<List<Integer>> subsets(int[] arr) {
+        backTrack(arr, 0, new LinkedList<>());
+        return ans;
     }
 
-    public void backTrack(int[] nums, int depth, ArrayList<Integer> queue) {
-        if (depth == nums.length) {
-            list.add(new ArrayList<>(queue));
+    private void backTrack(int[] arr, int depth, Deque<Integer> stack) {
+        if (depth == arr.length) {
+            ans.add(new ArrayList<>(stack));
             return ;
         }
-        // 添加该节点
-        queue.add(nums[depth]);
-        backTrack(nums, depth + 1, queue);
-        queue.remove(queue.size() - 1);
+        /* 1 添加该节点 */
+        stack.addLast(arr[depth]);
+        backTrack(arr, depth + 1, stack);
+        stack.removeLast();
 
-        // 不添加该节点
-        backTrack(nums, depth + 1, queue);
+        /* 2 不添加该节点 */
+        backTrack(arr, depth + 1, stack);
     }
 }
