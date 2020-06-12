@@ -15,7 +15,7 @@
 |[329](/leetcode/LC529.java)|中等|扫雷游戏|
 |[827](/leetcode/LC827.java)|困难|最大人工岛|
 
-## 2 图的BFS 5/10
+## 2 图的BFS 6/10
 
 与DFS不同的是，要先判断下一层节点是否合规，合规的话标记visited并添加进队列。
 
@@ -25,6 +25,7 @@
 |[200](/leetcode/LC200II.java)|中等|岛屿数量|
 |[417](/leetcode/LC417II.java)|中等|太平洋大西洋水流问题|
 |[542](/leetcode/LC542.java)|中等|01矩阵|
+|[127](/leetcode/LC127.java)|中等|单词接龙|
 
 ## 2.1 Dijkstra
 
