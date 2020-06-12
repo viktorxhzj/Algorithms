@@ -1,6 +1,6 @@
 # Array
 
-## 1 Double Pointers 14/?
+## 1 Double Pointers 18/20
 
 需要明确：
 1. 循环不变量是什么（即双指针分别意味着什么）
@@ -48,3 +48,12 @@
 |[424](/leetcode/LC424.java)|中等|替换后的最长重复字符|
 |[438](/leetcode/LC438.java)|中等|找到字符串中所有字母异位词|
 |[567](/leetcode/LC567.java)|中等|字符串的排列|
+|[763](/leetcode/LC763.java)|中等|划分字母区间|
+|[713](/leetcode/LC713.java)|中等|乘积小于K的子数组|
+|[881](/leetcode/LC881.java)|中等|救生艇|
+|[904](/leetcode/LC904.java)|中等|水果成篮|
+
+## 2 字符串的DFS 0/20
+
+
+## 3 字符串的BFS 0/5

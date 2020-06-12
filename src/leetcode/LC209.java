@@ -7,21 +7,18 @@ package leetcode;
  */
 public class LC209 {
     public int minSubArrayLen(int s, int[] arr) {
-        int i = 0, j = 0, sum = 0, minLen = arr.length + 1;
 
-        while (j < arr.length) {
+        int sum = 0, i = 0, minLen = arr.length + 1;
+        for (int j = 0; j < arr.length; j++) {
             sum += arr[j];
-            if (sum >= s) {
+            if (sum < s) continue;
+            while (sum >= s) {
                 minLen = Math.min(minLen, j - i + 1);
                 sum -= arr[i];
-                sum -= arr[j];
                 i++;
-                continue;
-            }
-            if (sum < s) {
-                j++;
             }
         }
+
         return minLen == arr.length + 1? 0: minLen;
     }
 }

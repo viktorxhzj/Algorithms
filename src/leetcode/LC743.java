@@ -6,17 +6,19 @@ public class LC743 {
     public int networkDelayTime(int[][] times, int N, int K) {
         int[][] graph = new int[N][N];
         for (int[] ints : graph) {
+            /* 无边的权重为-1 */
             Arrays.fill(ints, -1);
         }
+        /* 构造邻接矩阵 */
         for (int[] arr: times) {
             graph[arr[0] - 1][arr[1] - 1] = arr[2];
         }
 
-        int res = heapDijkstra(graph, K - 1, N);
+        int res = dijkstra(graph, K - 1, N);
         return res == 101? -1: res;
     }
 
-    public int heapDijkstra(int[][] graph, int sourcePos, int len) {
+    private int dijkstra(int[][] graph, int sourcePos, int len) {
         int[] distances = new int[len];
         boolean[] visited = new boolean[len];
 
@@ -48,6 +50,5 @@ public class LC743 {
             maxD = Math.max(maxD, dis);
         }
         return maxD;
-
     }
 }

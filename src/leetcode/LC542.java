@@ -11,6 +11,7 @@ public class LC542 {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == 0) {
                     queue.offer(new int[]{i, j});
+                    /* 标记已经遍历过 */
                     matrix[i][j] = -1;
                 }
             }
@@ -21,6 +22,7 @@ public class LC542 {
             for (int k = 0; k < size; k++) {
                 int[] temp = queue.poll();
                 if (temp[0] + 1 < matrix.length && matrix[temp[0] + 1][temp[1]] != -1) {
+                    /* 更新距离 */
                     res[temp[0] + 1][temp[1]] = level;
                     matrix[temp[0] + 1][temp[1]] = -1;
                     queue.offer(new int[]{temp[0] + 1, temp[1]});
