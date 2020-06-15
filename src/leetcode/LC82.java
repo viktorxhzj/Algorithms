@@ -6,49 +6,22 @@ public class LC82 {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null || head.next == null) return head;
 
-        ListNode pre = head, cur = head.next;
-        ListNode nxt = new ListNode(-1);
-        ListNode res = nxt;
-
-
-        while (cur != null) {
-            if (pre.val != cur.val) {
-                nxt.next = pre;
-                nxt = nxt.next;
-                pre = cur;
-                cur = cur.next;
+        ListNode dummy = new ListNode(-99999);
+        dummy.next = head;
+        ListNode p1 = dummy, p2 = head, p3 = head.next;
+        while (p3 != null) {
+            if (p2.val != p3.val) {
+                p1 = p1.next;
+                p2 = p2.next;
+                p3 = p3.next;
+                continue;
             }
-            else {
-                while (cur != null && pre.val == cur.val) cur = cur.next;
-                if (cur == null) {
-                    pre = null;
-                    break;
-                }
-                else {
-                    pre = cur;
-                    cur = cur.next;
-                }
-            }
+            while (p3 != null && p3.val == p2.val) p3 = p3.next;
+            p1.next = p3;
+            p2 = p3;
+            if (p3 != null) p3 = p3.next;
         }
-        nxt.next = pre;
-        return res.next;
-    }
-}
+        return dummy.next;
 
-class LC82II {
-    public ListNode deleteDuplicates(ListNode node) {
-        if (node == null || node.next == null) return node;
-
-        ListNode oriNext = node.next;
-        ListNode corNext = deleteDuplicates(node.next);
-        if (node.val == oriNext.val) {
-            if (corNext == null) return null;
-            else if (node.val == corNext.val) return corNext.next;
-            else return corNext;
-        }
-        else {
-            node.next = corNext;
-            return node;
-        }
     }
 }

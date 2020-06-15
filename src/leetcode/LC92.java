@@ -3,43 +3,29 @@ package leetcode;
 import datastructure.ListNode;
 
 public class LC92 {
-    ListNode end;
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode res = new ListNode(-1);
-        ListNode cur = res;
-        res.next = head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
 
-        int pos = 0;
+        ListNode pre = dummy, cur = head;
 
-        while (pos != m - 1) {
+        for (int i = 1; i < m; i++) {
+            pre = pre.next;
             cur = cur.next;
-            pos++;
         }
-        ListNode temp = cur.next;
-        cur.next = rev(temp, n - m);
-        temp.next = end;
 
-        return res.next;
-    }
+        ListNode p1 = cur, p2 = cur.next;
 
-    public ListNode rev(ListNode node, int depth) {
-        if (depth == 0) {
-            end = node.next;
-            return node;
+        for (int i = m; i < n; i++) {
+            ListNode nxt = p2.next;
+            p2.next = p1;
+            p1 = p2;
+            p2 = nxt;
         }
-        ListNode returnNode = rev(node.next, depth - 1);
-        node.next.next = node;
-        node.next = null;
-        return returnNode;
-    }
 
-    public static void main(String[] args) {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(4);
-        head.next.next.next.next = new ListNode(5);
-        LC92 algo = new LC92();
-        ListNode res = algo.reverseBetween(head, 2, 4);
+        pre.next.next = p2;
+        pre.next = p1;
+
+        return dummy.next;
     }
 }

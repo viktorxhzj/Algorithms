@@ -18,10 +18,8 @@
 |[437](/leetcode/LC437.java)|路径总和III|
 |[1248](/leetcode/LC1248.java)|统计优美子数组|
 |[454](/leetcode/LC454.java)|四数相加II|
+|[1171](/leetcode/LC1171.java)|从链表中删去总和值为零的连续节点|
 
 
-560
-525
 30
 41
-437

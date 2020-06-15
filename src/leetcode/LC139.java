@@ -5,21 +5,27 @@ import java.util.List;
 import java.util.Set;
 
 public class LC139 {
+    private Set<String> wordSet;
+    private Boolean[] memo;
     public boolean wordBreak(String s, List<String> wordDict) {
-        return recur(s, new HashSet<>(wordDict), 0, new Boolean[s.length()]);
+        wordSet = new HashSet<>(wordDict);
+        memo = new Boolean[s.length()];
+
+        return recur(s, 0);
     }
-    public boolean recur(String s, Set<String> wordDict, int start, Boolean[] memo) {
-        if (start == s.length()) {
-            return true;
-        }
-        if (memo[start] != null) {
-            return memo[start];
-        }
-        for (int end = start + 1; end <= s.length(); end++) {
-            if (wordDict.contains(s.substring(start, end)) && recur(s, wordDict, end, memo)) {
-                return memo[start] = true;
+    public boolean recur(String s, int i) {
+        if (i == s.length()) return true;
+        if (memo[i] != null) return memo[i];
+
+        for (int j = i + 1; j <= s.length(); j++) {
+            String possible = s.substring(i, j);
+            if (!wordSet.contains(possible)) continue;
+            if (recur(s, j)) {
+                memo[i] = true;
+                return true;
             }
         }
-        return memo[start] = false;
+        memo[i] = false;
+        return false;
     }
 }
